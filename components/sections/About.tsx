@@ -159,7 +159,7 @@ export const About: React.FC = () => {
                             {/* Content Column */}
                             <div className="grid grid-cols-2 md:grid-cols-2 gap-4 pt-2 lg:pt-0">
                                 {SKILLS.map((skill, i) => (
-                                    <div key={i} className="tech-item opacity-0 group relative p-5 border border-border bg-foreground/5 hover:bg-foreground hover:text-background transition-all duration-300 rounded-sm">
+                                    <div key={i} className="tech-item group relative p-5 border border-border bg-foreground/5 hover:bg-foreground hover:text-background transition-all duration-300 rounded-sm">
                                         <div className="font-mono text-sm text-foreground group-hover:text-background mb-2 transition-colors">{skill.name}</div>
 
                                         <div className="text-[10px] text-muted group-hover:text-background/70 transition-colors leading-tight">

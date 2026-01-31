@@ -85,10 +85,14 @@ export const SKILLS: Skill[] = [
     { name: "JavaScript", description: "Core language proficiency." },
     { name: "TypeScript", description: "Type-safe development." },
     { name: "React / Next.js", description: "Component-based UI architecture." },
-    { name: "WebGL / Three.js", description: "Immersive 3D experiences." },
     { name: "Node.js", description: "Backend runtime environment." },
+    { name: "Express.js", description: "Backend runtime environment." },
     { name: "PostgreSQL", description: "Relational database management." },
-    { name: "AWS", description: "Cloud infrastructure services." },
+    { name: "MongoDB", description: "NoSQL database management." },
+    { name: "Solidity", description: "Smart contract development." },
+    { name: "Rust", description: "System programming." },
+    { name: "Websocket", description: "Real-time communication." },
+    { name: "Docker", description: "Containerization." },
     { name: "GSAP", description: "High-performance animations." }
 ];
 
@@ -96,21 +100,6 @@ export const SOCIALS: SocialLink[] = [
     { platform: "GitHub", url: "https://github.com", icon: "github" },
     { platform: "Twitter", url: "https://twitter.com", icon: "twitter" },
     { platform: "LinkedIn", url: "https://linkedin.com", icon: "linkedin" }
-];
-
-export const WRAP_2025 = [
-    { month: "January", title: "The Beginning", description: "Started the year learning Rust and shipping my first crate." },
-    { month: "February", title: "First Hackathon", description: "Won 2nd place at ETHGlobal for a DeFi analytics tool." },
-    { month: "March", title: "Open Source", description: "Merged my first PR into a major React UI library." },
-    { month: "April", title: "Freelance Leap", description: "Took on my first major enterprise client for a design system." },
-    { month: "May", title: "Speaking Event", description: "Gave a talk on WebGL performance at a local meetup." },
-    { month: "June", title: "Burnout & Recovery", description: "Learned the importance of rest. Spent 2 weeks offline hiking." },
-    { month: "July", title: "Project Neon", description: "Launched Neon Finance. Hit 1k users in the first week." },
-    { month: "August", title: "Refactoring", description: "Deep dived into performance patterns and browser rendering." },
-    { month: "September", title: "Mentorship", description: "Started mentoring junior devs on Frontend Masters." },
-    { month: "October", title: "The Move", description: "Relocated to a new city to join a Web3 startup." },
-    { month: "November", title: "AI Integration", description: "Built Nexus Chat, exploring Gemini and LLM integration." },
-    { month: "December", title: "Reflection", description: "Planning the roadmap for 2026 and refining my portfolio." }
 ];
 
 export const GOALS_2026 = [
