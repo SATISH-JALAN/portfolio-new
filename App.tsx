@@ -5,7 +5,6 @@ import { About } from './components/sections/About';
 import { Projects } from './components/sections/Projects';
 import { Contact } from './components/sections/Contact';
 import { YearReview } from './components/sections/YearReview';
-import { Wrap2025 } from './components/pages/Wrap2025';
 import { Goals2026 } from './components/pages/Goals2026';
 import { CursorTrail } from './components/CursorTrail';
 import { ScrollToTop } from './components/ScrollToTop';
@@ -22,7 +21,7 @@ import gsap from 'gsap';
 const AppContent: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
-  const [currentView, setCurrentView] = useState<'home' | 'wrap' | 'goals'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'goals'>('home');
   const progressBarRef = useRef<HTMLDivElement>(null);
 
   // Lock scroll during loading or modal open
@@ -125,8 +124,6 @@ const AppContent: React.FC = () => {
               <YearReview onNavigate={handleNavigate} />
               <Contact />
             </>
-          ) : currentView === 'wrap' ? (
-            <Wrap2025 onBack={handleBack} />
           ) : (
             <Goals2026 onBack={handleBack} />
           )}

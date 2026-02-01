@@ -167,11 +167,24 @@ export const SOCIALS: SocialLink[] = [
 export const WRAP_2025: { month: string; title: string; description: string }[] = [];
 
 export const GOALS_2026 = [
-    { id: 1, text: "Master WebGPU and Compute Shaders", completed: false },
-    { id: 2, text: "Launch a SaaS product to $5k MRR", completed: false },
-    { id: 3, text: "Contribute to React Core or Three.js", completed: false },
-    { id: 4, text: "Write 12 technical articles (1 per month)", completed: false },
-    { id: 5, text: "Read 24 books (Tech + Fiction)", completed: false },
-    { id: 6, text: "Run a Marathon", completed: false },
-    { id: 7, text: "Learn a new spoken language (Spanish)", completed: false }
+    { id: 1, text: "Learn how to do more quality code", completed: false },
+    { id: 2, text: "Become Proficient in Rust", completed: false },
+    { id: 3, text: "Go Deep into Solana Development", completed: false },
+    { id: 4, text: "Getting into superdev", completed: false },
+    { id: 5, text: "Read books", completed: false },
+    { id: 6, text: "Transition into DevRel", completed: false },
+    { id: 7, text: "Launch My Own Startup", completed: false },
+    { id: 8, text: "Secure Funding", completed: false },
+    { id: 9, text: "Attend more and more Hackathons & win them", completed: false },
+    { id: 10, text: "Earn Sponsored National & International Trips", completed: false },
+    { id: 11, text: "Teach Web3 to Juniors", completed: false },
+    { id: 12, text: "Learn a new spoken language (japanese)", completed: false },
+    { id: 13, text: "Loose weight", completed: false },
+    { id: 14, text: "Trek in the Mountains", completed: true },
+    { id: 15, text: "Become Someone Known for Building Real Things", completed: false },
+    { id: 16, text: "Start Content Creation", completed: false },
+    { id: 17, text: "Speak at at least one tech event", completed: false },
+    { id: 18, text: "Contribute to a major open-source project", completed: false },
+    { id: 19, text: "Develop strong public speaking skills", completed: false },
+    { id: 20, text: "Learn startup fundamentals (sales, pitching, storytelling)", completed: false },
 ];
