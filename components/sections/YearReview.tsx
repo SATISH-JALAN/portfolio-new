@@ -19,12 +19,13 @@ export const YearReview: React.FC<YearReviewProps> = ({ onNavigate }) => {
             gsap.from(".review-card", {
                 scrollTrigger: {
                     trigger: containerRef.current,
-                    start: "top 80%",
-                    toggleActions: "play none none reverse"
+                    start: "top 90%",
+                    toggleActions: "play none none none",
+                    once: true
                 },
-                y: 50,
+                y: 30,
                 opacity: 0,
-                duration: 0.8,
+                duration: 0.6,
                 stagger: 0.2,
                 ease: "power3.out"
             });
