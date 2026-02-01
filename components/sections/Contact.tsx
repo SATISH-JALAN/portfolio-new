@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Button, Input, Textarea } from '../ui/Elements';
 import { SOCIALS, PORTFOLIO_DATA } from '../../constants';
 import { TextScramble } from '../ui/TextScramble';
-import { Copy, Check, Github, Twitter, Linkedin, LucideIcon } from 'lucide-react';
+import { Copy, Check, Github, Twitter, Linkedin, LucideIcon, Mail } from 'lucide-react';
 import gsap from 'gsap';
 
 
@@ -31,6 +31,7 @@ const SocialIcon: React.FC<{ social: typeof SOCIALS[0] }> = ({ social }) => {
             case 'twitter': return Twitter;
             case 'linkedin': return Linkedin;
             case 'whatsapp': return WhatsAppIcon; // Custom Bootstrap Icon
+            case 'mail': return Mail;
             default: return Github;
         }
     };

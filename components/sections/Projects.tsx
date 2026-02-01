@@ -226,16 +226,18 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
                     </div>
 
                     <div className="mt-8 pt-8 border-t border-border flex flex-col sm:flex-row gap-4">
-                        <a
-                            href={project.liveLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex-1"
-                        >
-                            <Button className="w-full gap-2 h-12 text-sm uppercase tracking-widest font-bold">
-                                Live Demo <ExternalLink size={16} />
-                            </Button>
-                        </a>
+                        {project.liveLink && project.liveLink !== "" && (
+                            <a
+                                href={project.liveLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex-1"
+                            >
+                                <Button className="w-full gap-2 h-12 text-sm uppercase tracking-widest font-bold">
+                                    Live Demo <ExternalLink size={16} />
+                                </Button>
+                            </a>
+                        )}
                         <a
                             href={project.githubLink}
                             target="_blank"

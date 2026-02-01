@@ -17,7 +17,7 @@ export const PROJECTS: Project[] = [
         description: "Real-time Event Streaming Infrastructure for Soroban & Stellar",
         longDescription: "Weft is a powerful event streaming platform that transforms raw blockchain data into actionable, enriched business signals. Think of it as The Graph or Alchemy Notify but built specifically for the Stellar network's new smart contract platform, Soroban. It provides a range of services to help users navigate the complex world of Web3. The platform is built with Next.js and TypeScript, and features a modern, user-friendly interface with a focus on accessibility and performance.",
         tech: ["React (Vite)", "Tailwind CSS", "ShadCN UI", "Zustand", "Freighter", "Node.js", "Express", "PostgreSQL", "Neon", "Prisma", "Redis", "Upstash", "BullMQ", "Socket.io", "Stellar SDK"],
-        liveLink: "https://example.com/neon-live",
+        liveLink: "",
         githubLink: "https://github.com/SATISH-JALAN/Weft",
         image: "/Weft.png",
         year: "Jan 2026",
@@ -29,8 +29,8 @@ export const PROJECTS: Project[] = [
         description: "Decentralized Pay-Before-Queue Gaming Platform with Multichain Support.",
         longDescription: "Surge is a trustless gaming platform where players stake ETH/MNT to compete, with winners taking 75% of the pot while the platform collects 25% as fees. Built with smart contract escrow and real-time Socket.io matchmaking.",
         tech: ["Next.js 15", "Wagmi", "Viem", "RainbowKit", "Socket.io", "shadcn/ui", "Firebase", "Node.js", "TypeScript", "Ethers.js v6", "Render", "Solidity", "OpenZeppelin", "Hardhat"],
-        liveLink: "https://example.com/aero-live",
-        githubLink: "https://github.com/example/aero",
+        liveLink: "https://surge-snowy.vercel.app/",
+        githubLink: "https://github.com/Mrinmoy-programmer07/Surge",
         image: "/surge.png",
         year: "Nov 2025",
         category: "personal"
@@ -41,8 +41,8 @@ export const PROJECTS: Project[] = [
         description: "Midnight Radio is a decentralized, ephemeral voice streaming protocol.",
         longDescription: "Midnight Radio is a decentralized, ephemeral voice streaming protocol built for the Mantle and Arbitrum ecosystems. It creates a digital 'Void'—a space where voice notes exist as live broadcasts for 24 hours before fading into silence, leaving behind only an immutable on-chain footprint. Unlike traditional social audio which is ephemeral-by-default but centralized, or podcasting which is permanent but heavy, Midnight Radio sits in the uncanny valley of digital permanence: the experience is fleeting, but the proof is eternal. Every broadcast is an ERC-721 NFT with audio pinned to IPFS for exactly 24 hours via a scheduled unpinning service, creating a 'Time-to-Live' (TTL) mechanic. The NFT itself remains in the broadcaster's wallet forever—a ghost of the transmission, a 'Proof of Voice.' It answers a specific question about Web3 social: Can we build a social graph based on fleeting moments rather than permanent feeds?",
         tech: ["Next.js", "Gemini API", "Socket.io", "Redis"],
-        liveLink: "https://example.com/nexus-live",
-        githubLink: "https://github.com/example/nexus",
+        liveLink: "https://midnight-radio.vercel.app/",
+        githubLink: "https://github.com/SATISH-JALAN/Midnight",
         image: "/midnight.png",
         year: "Dec 2025",
         category: "personal"
@@ -53,8 +53,8 @@ export const PROJECTS: Project[] = [
         description: "All-in-one on-chain consultancy and Web3 tooling platform.",
         longDescription: "Web3Wise is an all-in-one on-chain consultancy and Web3 tooling platform. It provides a range of services to help users navigate the complex world of Web3. The platform is built with Next.js and TypeScript, and features a modern, user-friendly interface with a focus on accessibility and performance.",
         tech: ["React", "Framer Motion", "Tailwind CSS", "Ethers.js", "Web3Modal"],
-        liveLink: "https://example.com/nexus-live",
-        githubLink: "https://github.com/example/nexus",
+        liveLink: "https://web3wise-v1.vercel.app/",
+        githubLink: "https://github.com/SATISH-JALAN/web3wise-v1",
         image: "/web3wise.png",
         year: "June 2025",
         category: "personal"
@@ -65,8 +65,8 @@ export const PROJECTS: Project[] = [
         description: "A peer-to-peer rental platform promoting sustainability and cultural preservation.",
         longDescription: "Circlo is a peer-to-peer rental platform that connects individuals looking to rent or borrow items. It promotes sustainability by reducing waste and encouraging the sharing of resources. The platform is built with React and TypeScript, and features a modern, user-friendly interface with a focus on accessibility and performance.",
         tech: ["Next.js", "TypeScript", "Tailwind CSS", "Firebase", "Cloud Firestore"],
-        liveLink: "https://example.com/zen-live",
-        githubLink: "https://github.com/example/zen",
+        liveLink: "",
+        githubLink: "https://github.com/SATISH-JALAN/Circlo-v1",
         image: "/Circlo.png",
         year: "Aug 2025",
         category: "personal"
@@ -162,7 +162,8 @@ export const SOCIALS: SocialLink[] = [
     { platform: "GitHub", url: "https://github.com/SATISH-JALAN", icon: "github" },
     { platform: "Twitter", url: "https://x.com/SatishJalan52", icon: "twitter" },
     { platform: "LinkedIn", url: "https://www.linkedin.com/in/satish-jalan/", icon: "linkedin" },
-    { platform: "WhatsApp", url: "https://wa.me/7439255916", icon: "whatsapp" }
+    { platform: "WhatsApp", url: "https://wa.me/7439255916", icon: "whatsapp" },
+    { platform: "Email", url: "mailto:satishjalan9163@gmail.com", icon: "mail" }
 ];
 
 export const WRAP_2025: { month: string; title: string; description: string }[] = [];
