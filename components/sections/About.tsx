@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SKILLS, EXPERIENCE, PORTFOLIO_DATA, EDUCATION } from '../../constants';
 import { GithubGraph } from '../ui/GithubGraph';
 import { Download, ArrowUpRight } from 'lucide-react';
+import { getTechIconInfo } from '../ui/TechBadge';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -204,18 +205,31 @@ export const About: React.FC = () => {
 
                             {/* Content Column */}
                             <div className="grid grid-cols-2 md:grid-cols-2 gap-4 pt-2 lg:pt-0">
-                                {SKILLS.map((skill, i) => (
-                                    <div key={i} className="tech-item group relative p-5 border border-border bg-foreground/5 hover:bg-foreground hover:text-background transition-all duration-300 rounded-sm">
-                                        <div className="font-mono text-sm text-foreground group-hover:text-background mb-2 transition-colors">{skill.name}</div>
+                                {SKILLS.map((skill, i) => {
+                                    const { iconClass, FallbackIcon } = getTechIconInfo(skill.name);
 
-                                        <div className="text-[10px] text-muted group-hover:text-background/70 transition-colors leading-tight">
-                                            {skill.description}
+                                    return (
+                                        <div key={i} className="tech-item group relative p-5 border border-border bg-foreground/5 hover:bg-foreground hover:text-background transition-all duration-300 rounded-sm">
+                                            {/* Icon Header */}
+                                            <div className="mb-4 text-3xl text-foreground group-hover:text-background transition-colors duration-300">
+                                                {iconClass ? (
+                                                    <i className={`${iconClass}`} />
+                                                ) : (
+                                                    <FallbackIcon size={32} strokeWidth={1.5} />
+                                                )}
+                                            </div>
+
+                                            <div className="font-mono text-sm text-foreground group-hover:text-background mb-2 transition-colors font-bold">{skill.name}</div>
+
+                                            <div className="text-[10px] text-muted group-hover:text-background/70 transition-colors leading-tight">
+                                                {skill.description}
+                                            </div>
+
+                                            {/* Decorative Corner */}
+                                            <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-border group-hover:border-background/50 transition-colors opacity-0 group-hover:opacity-100"></div>
                                         </div>
-
-                                        {/* Decorative Corner */}
-                                        <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-border group-hover:border-background/50 transition-colors opacity-0 group-hover:opacity-100"></div>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         </div>
 

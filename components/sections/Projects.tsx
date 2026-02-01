@@ -6,6 +6,7 @@ import { PROJECTS } from '../../constants';
 import { Project } from '../../types';
 import { ArrowUpRight, Github, ExternalLink, X, Calendar } from 'lucide-react';
 import { Button, Badge } from '../ui/Elements';
+import { TechBadge } from '../ui/TechBadge';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -131,9 +132,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onModalOpen }) => {
 
                                 <div className="flex flex-wrap gap-2 pt-1">
                                     {project.tech.slice(0, 3).map((t, i) => (
-                                        <Badge key={i} className="bg-foreground/5 text-foreground/70 border-border/50">
-                                            {t}
-                                        </Badge>
+                                        <TechBadge key={i} name={t} />
                                     ))}
                                     {project.tech.length > 3 && (
                                         <Badge className="bg-transparent border-transparent text-muted">+{project.tech.length - 3}</Badge>
@@ -214,9 +213,7 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
 
                         <div className="flex flex-wrap gap-2 mb-8">
                             {project.tech.map((tech) => (
-                                <span key={tech} className="font-mono text-xs px-2 py-1 bg-foreground/5 text-foreground rounded">
-                                    {tech}
-                                </span>
+                                <TechBadge key={tech} name={tech} />
                             ))}
                         </div>
 
