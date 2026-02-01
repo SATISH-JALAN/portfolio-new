@@ -16,17 +16,19 @@ export const YearReview: React.FC<YearReviewProps> = ({ onNavigate }) => {
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.from(".review-card", {
+            // Set initial state - card is visible but positioned down
+            gsap.set(".review-card", { y: 30, opacity: 1 });
+
+            // Animate to final position when scrolled into view
+            gsap.to(".review-card", {
                 scrollTrigger: {
                     trigger: containerRef.current,
-                    start: "top 90%",
-                    toggleActions: "play none none none",
-                    once: true
+                    start: "top 85%",
+                    toggleActions: "play none none none"
                 },
-                y: 30,
-                opacity: 0,
+                y: 0,
+                opacity: 1,
                 duration: 0.6,
-                stagger: 0.2,
                 ease: "power3.out"
             });
         }, containerRef);
