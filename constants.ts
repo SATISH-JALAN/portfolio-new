@@ -19,8 +19,8 @@ export const PROJECTS: Project[] = [
         tech: ["React (Vite)", "Tailwind CSS", "ShadCN UI", "Zustand", "Freighter", "Node.js", "Express", "PostgreSQL", "Neon", "Prisma", "Redis", "Upstash", "BullMQ", "Socket.io", "Stellar SDK"],
         liveLink: "https://example.com/neon-live",
         githubLink: "https://github.com/SATISH-JALAN/Weft",
-        image: "https://picsum.photos/1200/800?random=1",
-        year: "2026",
+        image: "/Weft.png",
+        year: "Jan 2026",
         category: "personal"
     },
     {
@@ -31,8 +31,8 @@ export const PROJECTS: Project[] = [
         tech: ["Next.js 15", "Wagmi", "Viem", "RainbowKit", "Socket.io", "shadcn/ui", "Firebase", "Node.js", "TypeScript", "Ethers.js v6", "Render", "Solidity", "OpenZeppelin", "Hardhat"],
         liveLink: "https://example.com/aero-live",
         githubLink: "https://github.com/example/aero",
-        image: "https://picsum.photos/1200/800?random=2",
-        year: "2023",
+        image: "/surge.png",
+        year: "Nov 2025",
         category: "personal"
     },
     {
@@ -43,8 +43,8 @@ export const PROJECTS: Project[] = [
         tech: ["Next.js", "Gemini API", "Socket.io", "Redis"],
         liveLink: "https://example.com/nexus-live",
         githubLink: "https://github.com/example/nexus",
-        image: "https://picsum.photos/1200/800?random=3",
-        year: "2023",
+        image: "/midnight.png",
+        year: "Dec 2025",
         category: "personal"
     },
     {
@@ -55,8 +55,8 @@ export const PROJECTS: Project[] = [
         tech: ["React", "Framer Motion", "Tailwind CSS", "Ethers.js", "Web3Modal"],
         liveLink: "https://example.com/nexus-live",
         githubLink: "https://github.com/example/nexus",
-        image: "https://picsum.photos/1200/800?random=3",
-        year: "2023",
+        image: "/web3wise.png",
+        year: "June 2025",
         category: "personal"
     },
     {
@@ -67,8 +67,8 @@ export const PROJECTS: Project[] = [
         tech: ["Next.js", "TypeScript", "Tailwind CSS", "Firebase", "Cloud Firestore"],
         liveLink: "https://example.com/zen-live",
         githubLink: "https://github.com/example/zen",
-        image: "https://picsum.photos/1200/800?random=4",
-        year: "2025",
+        image: "/Circlo.png",
+        year: "Aug 2025",
         category: "personal"
     },
     {
@@ -79,8 +79,8 @@ export const PROJECTS: Project[] = [
         tech: ["Next.js", "typescript", "tailwind", "Framer Motion", "shadcn/ui", "lucide-react"],
         liveLink: "https://aperture-alchemist-tau.vercel.app/",
         githubLink: "https://github.com/SATISH-JALAN/Aperture-Alchemist",
-        image: "https://picsum.photos/1200/800?random=5",
-        year: "2025",
+        image: "/aperture.png",
+        year: "Nov 2025",
         category: "client"
     }
 ];

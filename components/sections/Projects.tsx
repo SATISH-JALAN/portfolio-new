@@ -57,10 +57,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onModalOpen }) => {
             <div ref={containerRef} className="container px-4 md:px-6 mx-auto">
                 <div className="flex items-end justify-between mb-8 border-b border-border pb-6">
                     <div>
-                        <h2 className="text-4xl md:text-6xl font-display font-bold text-foreground">SELECTED WORK</h2>
-                        <p className="text-muted mt-2 font-mono text-sm max-w-md">
-                            A collection of digital products, websites, and tools built with a focus on motion and user experience.
-                        </p>
+                        <h2 className="text-4xl md:text-6xl font-display font-bold text-foreground">Projects</h2>
                     </div>
                     {/* Updated to 03 since Capabilities was removed */}
                     <span className="font-mono text-muted hidden md:block">(03)</span>
@@ -91,7 +88,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onModalOpen }) => {
                 </div>
 
                 {/* Grid Layout */}
-                <div className="projects-grid grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+                <div className="projects-grid grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-start">
                     {filteredProjects.map((project) => (
                         <div
                             key={project.id}
@@ -99,14 +96,14 @@ export const Projects: React.FC<ProjectsProps> = ({ onModalOpen }) => {
                             className="project-card group cursor-pointer flex flex-col gap-4 active:scale-[0.98] transition-transform duration-200"
                         >
                             {/* Image Card */}
-                            <div className="relative aspect-[16/10] overflow-hidden rounded-md border border-border bg-muted/10">
+                            <div className="relative overflow-hidden rounded-md border border-border bg-muted/10">
                                 {/* Overlay gradient for text legibility if needed, but keeping it clean for now */}
                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 z-10" />
 
                                 <img
                                     src={project.image}
                                     alt={project.title}
-                                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                    className="w-full h-auto transition-transform duration-700 ease-out group-hover:scale-105"
                                 />
 
                                 {/* Floating Action Icon */}
@@ -189,21 +186,20 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
                 </button>
             </div>
 
-            {/* Scrollable Container */}
-            <div ref={contentRef} className="w-full h-full max-w-5xl bg-background border border-border rounded-lg shadow-2xl overflow-y-auto overflow-x-hidden relative flex flex-col md:flex-row">
+            {/* Scrollable Container - Stacked Layout */}
+            <div ref={contentRef} className="w-full max-w-4xl max-h-[90vh] bg-background border border-border rounded-lg shadow-2xl overflow-y-auto overflow-x-hidden">
 
-                {/* Left: Image (Stays stuck on desktop, scrolls on mobile) */}
-                <div className="w-full md:w-1/2 h-[300px] md:h-auto sticky top-0 md:relative bg-muted/10">
+                {/* Image - Full width, natural height */}
+                <div className="w-full bg-muted/10">
                     <img
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-full object-cover"
+                        className="w-full h-auto"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent md:hidden" />
                 </div>
 
-                {/* Right: Content */}
-                <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col">
+                {/* Content */}
+                <div className="w-full p-8 md:p-12">
                     <div className="flex-1">
                         <div className="flex items-center gap-3 mb-6">
                             <span className="font-mono text-xs px-3 py-1 rounded-full border border-border text-muted uppercase tracking-wider">
