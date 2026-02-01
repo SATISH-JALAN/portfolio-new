@@ -86,21 +86,22 @@ export const PROJECTS: Project[] = [
 ];
 
 export const EXPERIENCE: Experience[] = [
-    {
+     {
         id: 1,
+        role: "HQ Contributor",
+        company: "Hackquest",
+        period: "Nov 2025 — Present",
+        description: "Collaborating, innovating and building a stronger Web3 ecosystem in India with industry experts."
+    },
+    {
+        id: 2,
         role: "Generative AI Developer Intern",
         company: "AI-Wallah",
         period: "June 2025 — July 2025",
         description: "Learning core concepts of Generative AI and LLM models. Gaining hands-on experience in developing and deploying projects related to generative models.",
         link: "https://www.linkedin.com/posts/satish-jalan_internship-generativeal-ai-activity-7338233329067945985-aZ0a?utm_source=share&utm_medium"
     },
-    {
-        id: 2,
-        role: "HQ Contributor",
-        company: "Hackquest",
-        period: "Nov 2025 — Present",
-        description: "Collaborating, innovating and building a stronger Web3 ecosystem in India with industry experts."
-    },
+   
     {
         id: 3,
         role: "Evangelist",
