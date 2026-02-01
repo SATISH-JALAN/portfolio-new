@@ -1,25 +1,23 @@
 
 import React, { forwardRef } from 'react';
-import { useSound } from '../../context/SoundContext';
+
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: 'primary' | 'outline' | 'ghost';
     size?: 'sm' | 'md' | 'lg';
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ 
-    children, 
-    className = '', 
-    variant = 'primary', 
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
+    children,
+    className = '',
+    variant = 'primary',
     size = 'md',
     onMouseEnter,
     onClick,
-    ...props 
+    ...props
 }, ref) => {
-    const { playHover, playClick } = useSound();
-
     const baseStyles = "inline-flex items-center justify-center font-mono text-sm transition-all duration-500 focus:outline-none disabled:opacity-50 active:scale-95";
-    
+
     // Updated to use CSS variables
     const variants = {
         primary: "bg-foreground text-background hover:bg-muted/80 hover:shadow-[0_0_20px_rgba(120,120,120,0.3)] border border-transparent",
@@ -34,19 +32,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
     };
 
     const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
-        playHover();
         if (onMouseEnter) onMouseEnter(e);
     };
 
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        playClick();
         if (onClick) onClick(e);
     };
 
     return (
-        <button 
+        <button
             ref={ref}
-            className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`} 
+            className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
             onMouseEnter={handleMouseEnter}
             onClick={handleClick}
             {...props}
@@ -84,7 +80,7 @@ export const Input: React.FC<React.InputHTMLAttributes<HTMLInputElement>> = ({ c
         />
         {/* Animated Bottom Border - Enhanced */}
         <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-foreground transition-all duration-500 ease-out group-focus-within:w-full group-focus-within:h-[3px] shadow-[0_-2px_15px_rgba(120,120,120,0.3)] z-20" />
-        
+
         {/* Animated Background Glow with Pulse */}
         <div className="absolute inset-0 bg-foreground/5 opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 pointer-events-none">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-foreground/5 to-transparent animate-pulse" />
@@ -106,10 +102,10 @@ export const Textarea: React.FC<React.TextareaHTMLAttributes<HTMLTextAreaElement
         />
         {/* Animated Bottom Border - Enhanced */}
         <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-foreground transition-all duration-500 ease-out group-focus-within:w-full group-focus-within:h-[3px] shadow-[0_-2px_15px_rgba(120,120,120,0.3)] z-20" />
-        
+
         {/* Animated Background Glow with Pulse */}
         <div className="absolute inset-0 bg-foreground/5 opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 pointer-events-none">
-             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-foreground/5 to-transparent animate-pulse" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-foreground/5 to-transparent animate-pulse" />
         </div>
     </div>
 );

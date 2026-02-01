@@ -12,10 +12,8 @@ import { FloatingNavbar } from './components/FloatingNavbar';
 import { ThemeToggle } from './components/ui/ThemeToggle';
 import { Preloader } from './components/Preloader';
 import { TextScramble } from './components/ui/TextScramble';
-import { SoundController } from './components/ui/SoundController';
 import { TimeWidget } from './components/ui/TimeWidget';
 import { PORTFOLIO_DATA } from './constants';
-import { SoundProvider } from './context/SoundContext';
 import gsap from 'gsap';
 
 const AppContent: React.FC = () => {
@@ -98,7 +96,7 @@ const AppContent: React.FC = () => {
         {/* Theme Toggle - Hidden when modal is open OR when on sub-pages (optional, but keeping it visible on sub-pages is better UX) */}
         <ThemeToggle hidden={isProjectModalOpen} />
 
-        <SoundController />
+
 
         {/* Top Bar - Absolute Position (Scrolls with page) */}
         <nav className="absolute top-0 left-0 right-0 z-40 py-6 pointer-events-none">
@@ -135,9 +133,7 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <SoundProvider>
-      <AppContent />
-    </SoundProvider>
+    <AppContent />
   );
 };
 

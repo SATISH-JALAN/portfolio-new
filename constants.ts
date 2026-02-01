@@ -161,7 +161,8 @@ export const EDUCATION: Education[] = [
 export const SOCIALS: SocialLink[] = [
     { platform: "GitHub", url: "https://github.com/SATISH-JALAN", icon: "github" },
     { platform: "Twitter", url: "https://x.com/SatishJalan52", icon: "twitter" },
-    { platform: "LinkedIn", url: "https://www.linkedin.com/in/satish-jalan/", icon: "linkedin" }
+    { platform: "LinkedIn", url: "https://www.linkedin.com/in/satish-jalan/", icon: "linkedin" },
+    { platform: "WhatsApp", url: "https://wa.me/7439255916", icon: "whatsapp" }
 ];
 
 export const WRAP_2025: { month: string; title: string; description: string }[] = [];

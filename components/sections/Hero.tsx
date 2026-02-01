@@ -1,7 +1,7 @@
 import React, { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
-import { ArrowDown, ArrowRight } from 'lucide-react';
-import { PORTFOLIO_DATA } from '../../constants';
+import { ArrowDown, ArrowRight, Github, Twitter, Linkedin } from 'lucide-react';
+import { PORTFOLIO_DATA, SOCIALS } from '../../constants';
 import { Button } from '../ui/Elements';
 
 interface HeroProps {
@@ -145,6 +145,26 @@ export const Hero: React.FC<HeroProps> = ({ loading = false }) => {
                             </span>
                         </div>
                     </div>
+
+                    {/* Social Icons */}
+                    <div className="hero-fade flex items-center gap-4 mt-8">
+                        {SOCIALS.filter(s => ['GitHub', 'LinkedIn', 'Twitter'].includes(s.platform)).map((social) => {
+                            const Icon = social.platform === 'GitHub' ? Github : social.platform === 'Twitter' ? Twitter : Linkedin;
+                            return (
+                                <a
+                                    key={social.platform}
+                                    href={social.url}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="group relative flex items-center justify-center w-12 h-12 border border-white/10 rounded-full text-muted transition-all duration-300 hover:border-foreground hover:bg-foreground hover:text-background hover:scale-110"
+                                    aria-label={social.platform}
+                                >
+                                    <Icon size={20} className="transition-transform duration-300" />
+                                </a>
+                            );
+                        })}
+                    </div>
+
                 </div>
             </div>
 
@@ -157,6 +177,6 @@ export const Hero: React.FC<HeroProps> = ({ loading = false }) => {
             {/* Subtle vertical line accent */}
             <div className="hidden lg:block absolute left-8 top-1/4 bottom-1/4 w-px bg-gradient-to-b from-transparent via-foreground/10 to-transparent" />
             <div className="hidden lg:block absolute right-8 top-1/4 bottom-1/4 w-px bg-gradient-to-b from-transparent via-foreground/10 to-transparent" />
-        </section>
+        </section >
     );
 };
