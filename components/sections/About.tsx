@@ -2,7 +2,7 @@
 import React, { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { SKILLS, EXPERIENCE, PORTFOLIO_DATA } from '../../constants';
+import { SKILLS, EXPERIENCE, PORTFOLIO_DATA, EDUCATION } from '../../constants';
 import { GithubGraph } from '../ui/GithubGraph';
 import { Download, ArrowUpRight } from 'lucide-react';
 
@@ -83,18 +83,24 @@ export const About: React.FC = () => {
                                 </h3>
                             </div>
 
-                            <p className="text-muted text-lg md:text-xl leading-relaxed font-light">
-                                {PORTFOLIO_DATA.bio} Based in {PORTFOLIO_DATA.location}, I combine technical depth with a sensitive eye for design to build scalable, performant, and beautiful software.
+                            <p className="text-foreground/90 text-xl md:text-2xl leading-relaxed font-light">
+                                {PORTFOLIO_DATA.bio}
                             </p>
 
-                            <p className="text-muted/80 text-base leading-relaxed">
-                                With a background in both design and engineering, I bridge the gap between aesthetics and functionality. I believe that the best digital experiences are those that feel natural, intuitive, and human.
-                            </p>
+                            <div className="space-y-5 text-muted">
+                                <p className="text-base md:text-lg leading-relaxed">
+                                    I'm deeply active in the Web3 space, working on DeFi tools, GameFi, SocioFi, and developer-focused infrastructure.
+                                </p>
+
+                                <p className="text-base md:text-lg leading-relaxed">
+                                    Hackathons and open-source projects fuel my growth—I believe in shipping bold ideas and building toward a faster, more open, and decentralized internet.
+                                </p>
+                            </div>
 
                             <div className="pt-4">
-                                <a href="#" className="inline-flex items-center gap-3 text-sm font-mono text-foreground border-b border-foreground pb-1 hover:opacity-70 transition-opacity group">
+                                <a href="https://drive.google.com/file/d/1JjslPgDp8TboJcvraaQLxmgfkGb0mwml/view" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 text-sm font-mono text-foreground border-b border-foreground pb-1 hover:opacity-70 transition-opacity group">
                                     <Download size={16} />
-                                    <span>Download Resume</span>
+                                    <span>Resume</span>
                                     <ArrowUpRight size={14} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                                 </a>
                             </div>
@@ -119,7 +125,7 @@ export const About: React.FC = () => {
                             {/* Content Column */}
                             <div className="border-l border-border ml-3 space-y-12 pb-4 pt-2 lg:pt-0">
                                 {EXPERIENCE.map((exp) => (
-                                    <div key={exp.id} className="experience-item relative pl-8 md:pl-12 opacity-0 group">
+                                    <div key={exp.id} className="experience-item relative pl-8 md:pl-12 group">
 
                                         {/* Timeline Dot & Halo */}
                                         <div className="absolute top-3 left-0 -translate-x-1/2 flex items-center justify-center">
@@ -130,16 +136,56 @@ export const About: React.FC = () => {
                                             <div className="w-2.5 h-2.5 rounded-full bg-background border border-muted group-hover:bg-foreground group-hover:border-foreground transition-colors duration-300 relative z-10 shadow-sm" />
                                         </div>
 
-                                        <div className="cursor-default">
-                                            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-2">
-                                                <h4 className="text-2xl text-muted font-display font-medium group-hover:text-foreground transition-colors duration-300">{exp.company}</h4>
-                                                <span className="font-mono text-xs text-muted mt-1 sm:mt-0 px-2 py-1 bg-foreground/5 border border-border rounded group-hover:border-muted transition-colors">{exp.period}</span>
+                                        {exp.link ? (
+                                            <a href={exp.link} target="_blank" rel="noopener noreferrer" className="block cursor-pointer">
+                                                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-2">
+                                                    <h4 className="text-2xl text-muted font-display font-medium group-hover:text-foreground transition-colors duration-300">{exp.company}</h4>
+                                                    <span className="font-mono text-xs text-muted mt-1 sm:mt-0 px-2 py-1 bg-foreground/5 border border-border rounded group-hover:border-muted transition-colors">{exp.period}</span>
+                                                </div>
+                                                <h5 className="text-sm font-mono text-muted mb-4 group-hover:text-foreground/70 transition-colors">{exp.role}</h5>
+                                                <p className="text-muted leading-relaxed max-w-2xl group-hover:text-foreground/80 transition-colors duration-300">
+                                                    {exp.description}
+                                                </p>
+                                            </a>
+                                        ) : (
+                                            <div className="cursor-default">
+                                                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-2">
+                                                    <h4 className="text-2xl text-muted font-display font-medium group-hover:text-foreground transition-colors duration-300">{exp.company}</h4>
+                                                    <span className="font-mono text-xs text-muted mt-1 sm:mt-0 px-2 py-1 bg-foreground/5 border border-border rounded group-hover:border-muted transition-colors">{exp.period}</span>
+                                                </div>
+                                                <h5 className="text-sm font-mono text-muted mb-4 group-hover:text-foreground/70 transition-colors">{exp.role}</h5>
+                                                <p className="text-muted leading-relaxed max-w-2xl group-hover:text-foreground/80 transition-colors duration-300">
+                                                    {exp.description}
+                                                </p>
                                             </div>
-                                            <h5 className="text-sm font-mono text-muted mb-4 group-hover:text-foreground/70 transition-colors">{exp.role}</h5>
-                                            <p className="text-muted leading-relaxed max-w-2xl group-hover:text-foreground/80 transition-colors duration-300">
-                                                {exp.description}
-                                            </p>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Education */}
+                        <div className="w-full max-w-6xl mx-auto education-section grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-start">
+                            {/* Header Column */}
+                            <div className="text-left lg:sticky lg:top-64 lg:pt-32">
+                                <span className="font-mono text-xs text-muted/60 uppercase tracking-widest mb-6 block">03 / Education</span>
+                                <h2 className="text-4xl md:text-6xl font-display font-medium text-foreground tracking-tighter leading-[0.9]">
+                                    Academic<br />Background.
+                                </h2>
+                            </div>
+
+                            {/* Content Column */}
+                            <div className="space-y-8 pt-2 lg:pt-0">
+                                {EDUCATION.map((edu) => (
+                                    <div key={edu.id} className="education-item group relative p-6 border border-border bg-foreground/5 hover:bg-foreground/10 transition-all duration-300 rounded-sm">
+                                        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-3">
+                                            <h4 className="text-xl text-foreground font-display font-medium">{edu.institution}</h4>
+                                            <span className="font-mono text-xs text-muted mt-1 sm:mt-0 px-2 py-1 bg-foreground/5 border border-border rounded">{edu.period}</span>
                                         </div>
+                                        <h5 className="text-sm font-mono text-muted mb-2">{edu.degree}</h5>
+                                        {edu.location && (
+                                            <p className="text-xs text-muted/70">{edu.location}</p>
+                                        )}
                                     </div>
                                 ))}
                             </div>
@@ -150,7 +196,7 @@ export const About: React.FC = () => {
                         <div className="w-full max-w-6xl mx-auto tech-grid grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-center">
                             {/* Header Column */}
                             <div className="text-left">
-                                <span className="font-mono text-xs text-muted/60 uppercase tracking-widest mb-6 block">03 / Tools</span>
+                                <span className="font-mono text-xs text-muted/60 uppercase tracking-widest mb-6 block">04 / Tools</span>
                                 <h2 className="text-4xl md:text-6xl font-display font-medium text-foreground tracking-tighter leading-[0.9]">
                                     Tech<br />Stack.
                                 </h2>
@@ -178,7 +224,7 @@ export const About: React.FC = () => {
                         <div className="w-full max-w-6xl mx-auto contributions-wrapper opacity-0 grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-start">
                             {/* Header Column */}
                             <div className="text-left lg:sticky lg:top-32">
-                                <span className="font-mono text-xs text-muted/60 uppercase tracking-widest mb-6 block">04 / Code</span>
+                                <span className="font-mono text-xs text-muted/60 uppercase tracking-widest mb-6 block">05 / Code</span>
                                 <h2 className="text-4xl md:text-6xl font-display font-medium text-foreground tracking-tighter leading-[0.9]">
                                     Open<br />Source.
                                 </h2>

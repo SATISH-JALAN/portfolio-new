@@ -16,6 +16,10 @@ interface ProjectsProps {
 export const Projects: React.FC<ProjectsProps> = ({ onModalOpen }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<'personal' | 'client'>('personal');
+
+    // Filter projects based on selected category
+    const filteredProjects = PROJECTS.filter(project => project.category === selectedCategory);
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -35,7 +39,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onModalOpen }) => {
         }, containerRef);
 
         return () => ctx.revert();
-    }, []);
+    }, [selectedCategory]); // Re-run animation when category changes
 
     // Handle body scroll locking when modal is open and notify parent
     useEffect(() => {
@@ -51,7 +55,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onModalOpen }) => {
     return (
         <section id="work" className="py-32 relative bg-background transition-colors duration-500">
             <div ref={containerRef} className="container px-4 md:px-6 mx-auto">
-                <div className="flex items-end justify-between mb-16 border-b border-border pb-6">
+                <div className="flex items-end justify-between mb-8 border-b border-border pb-6">
                     <div>
                         <h2 className="text-4xl md:text-6xl font-display font-bold text-foreground">SELECTED WORK</h2>
                         <p className="text-muted mt-2 font-mono text-sm max-w-md">
@@ -62,10 +66,34 @@ export const Projects: React.FC<ProjectsProps> = ({ onModalOpen }) => {
                     <span className="font-mono text-muted hidden md:block">(03)</span>
                 </div>
 
+                {/* Category Toggle Switch */}
+                <div className="flex justify-center mb-12">
+                    <div className="inline-flex items-center gap-1 p-1 bg-muted/20 rounded-full border border-border">
+                        <button
+                            onClick={() => setSelectedCategory('personal')}
+                            className={`px-6 py-2.5 rounded-full font-mono text-sm font-medium transition-all duration-300 ${selectedCategory === 'personal'
+                                ? 'bg-foreground text-background shadow-lg'
+                                : 'text-muted hover:text-foreground'
+                                }`}
+                        >
+                            Personal ({PROJECTS.filter(p => p.category === 'personal').length})
+                        </button>
+                        <button
+                            onClick={() => setSelectedCategory('client')}
+                            className={`px-6 py-2.5 rounded-full font-mono text-sm font-medium transition-all duration-300 ${selectedCategory === 'client'
+                                ? 'bg-foreground text-background shadow-lg'
+                                : 'text-muted hover:text-foreground'
+                                }`}
+                        >
+                            Client ({PROJECTS.filter(p => p.category === 'client').length})
+                        </button>
+                    </div>
+                </div>
+
                 {/* Grid Layout */}
                 <div className="projects-grid grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-                    {PROJECTS.map((project) => (
-                        <div 
+                    {filteredProjects.map((project) => (
+                        <div
                             key={project.id}
                             onClick={() => setSelectedProject(project)}
                             className="project-card group cursor-pointer flex flex-col gap-4 active:scale-[0.98] transition-transform duration-200"
@@ -74,13 +102,13 @@ export const Projects: React.FC<ProjectsProps> = ({ onModalOpen }) => {
                             <div className="relative aspect-[16/10] overflow-hidden rounded-md border border-border bg-muted/10">
                                 {/* Overlay gradient for text legibility if needed, but keeping it clean for now */}
                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 z-10" />
-                                
-                                <img 
-                                    src={project.image} 
-                                    alt={project.title} 
+
+                                <img
+                                    src={project.image}
+                                    alt={project.title}
                                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                                 />
-                                
+
                                 {/* Floating Action Icon */}
                                 <div className="absolute top-4 right-4 z-20 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                                     <div className="w-10 h-10 bg-background/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg border border-border text-foreground">
@@ -99,7 +127,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onModalOpen }) => {
                                         {project.year}
                                     </span>
                                 </div>
-                                
+
                                 <p className="text-muted line-clamp-2 text-sm leading-relaxed">
                                     {project.description}
                                 </p>
@@ -135,11 +163,11 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.fromTo(modalRef.current, 
-                { opacity: 0 }, 
+            gsap.fromTo(modalRef.current,
+                { opacity: 0 },
                 { opacity: 1, duration: 0.4, ease: "power2.out" }
             );
-            
+
             gsap.fromTo(contentRef.current,
                 { y: 100, opacity: 0 },
                 { y: 0, opacity: 1, duration: 0.6, ease: "power3.out", delay: 0.1 }
@@ -153,7 +181,7 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
         <div ref={modalRef} className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-xl p-4 md:p-8">
             {/* Close Button Area */}
             <div className="absolute top-6 right-6 z-50">
-                <button 
+                <button
                     onClick={onClose}
                     className="w-12 h-12 rounded-full bg-foreground text-background flex items-center justify-center hover:bg-muted hover:scale-105 transition-all shadow-xl"
                 >
@@ -163,12 +191,12 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
 
             {/* Scrollable Container */}
             <div ref={contentRef} className="w-full h-full max-w-5xl bg-background border border-border rounded-lg shadow-2xl overflow-y-auto overflow-x-hidden relative flex flex-col md:flex-row">
-                
+
                 {/* Left: Image (Stays stuck on desktop, scrolls on mobile) */}
                 <div className="w-full md:w-1/2 h-[300px] md:h-auto sticky top-0 md:relative bg-muted/10">
-                    <img 
-                        src={project.image} 
-                        alt={project.title} 
+                    <img
+                        src={project.image}
+                        alt={project.title}
                         className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent md:hidden" />
@@ -202,9 +230,9 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
                     </div>
 
                     <div className="mt-8 pt-8 border-t border-border flex flex-col sm:flex-row gap-4">
-                        <a 
-                            href={project.liveLink} 
-                            target="_blank" 
+                        <a
+                            href={project.liveLink}
+                            target="_blank"
                             rel="noopener noreferrer"
                             className="flex-1"
                         >
@@ -212,9 +240,9 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
                                 Live Demo <ExternalLink size={16} />
                             </Button>
                         </a>
-                        <a 
-                            href={project.githubLink} 
-                            target="_blank" 
+                        <a
+                            href={project.githubLink}
+                            target="_blank"
                             rel="noopener noreferrer"
                             className="flex-1"
                         >

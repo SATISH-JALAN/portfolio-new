@@ -9,6 +9,7 @@ export interface Project {
     githubLink: string;
     image: string;
     year: string;
+    category: 'personal' | 'client';
 }
 
 export interface Experience {
@@ -17,6 +18,7 @@ export interface Experience {
     company: string;
     period: string;
     description: string;
+    link?: string;
 }
 
 export interface SocialLink {
@@ -28,4 +30,12 @@ export interface SocialLink {
 export interface Skill {
     name: string;
     description: string;
+}
+
+export interface Education {
+    id: number;
+    institution: string;
+    degree: string;
+    period: string;
+    location?: string;
 }

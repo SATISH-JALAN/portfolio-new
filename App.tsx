@@ -94,7 +94,7 @@ const AppContent: React.FC = () => {
         {currentView === 'home' && <ScrollToTop />}
 
         {/* Navbar hidden on sub-pages for "distinct page" feel */}
-        {currentView === 'home' && <FloatingNavbar />}
+        {currentView === 'home' && <FloatingNavbar hidden={isProjectModalOpen} />}
 
         {/* Theme Toggle - Hidden when modal is open OR when on sub-pages (optional, but keeping it visible on sub-pages is better UX) */}
         <ThemeToggle hidden={isProjectModalOpen} />

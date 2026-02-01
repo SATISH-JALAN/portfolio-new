@@ -10,7 +10,7 @@ const navItems = [
     { id: 'contact', label: 'Contact', icon: Mail },
 ];
 
-export const FloatingNavbar: React.FC = () => {
+export const FloatingNavbar: React.FC<{ hidden?: boolean }> = ({ hidden = false }) => {
     const [activeSection, setActiveSection] = useState('hero');
     const [hoveredTab, setHoveredTab] = useState<string | null>(null);
     const navRef = useRef<HTMLDivElement>(null);
@@ -18,7 +18,7 @@ export const FloatingNavbar: React.FC = () => {
     useEffect(() => {
         // Entrance animation
         const ctx = gsap.context(() => {
-            gsap.fromTo(navRef.current, 
+            gsap.fromTo(navRef.current,
                 { y: 100, opacity: 0, scale: 0.9 },
                 { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.7)", delay: 0.5 }
             );
@@ -27,7 +27,7 @@ export const FloatingNavbar: React.FC = () => {
         // Scroll Spy Logic
         const handleScroll = () => {
             const scrollPosition = window.scrollY + window.innerHeight * 0.4;
-            
+
             for (const item of navItems) {
                 const element = document.getElementById(item.id);
                 if (element) {
@@ -46,20 +46,50 @@ export const FloatingNavbar: React.FC = () => {
         };
     }, []);
 
+    // Animate hide/show based on hidden prop
+    useEffect(() => {
+        if (navRef.current) {
+            if (hidden) {
+                // Hide animation
+                gsap.to(navRef.current, {
+                    y: 100,
+                    opacity: 0,
+                    scale: 0.9,
+                    duration: 0.4,
+                    ease: "power2.in",
+                    pointerEvents: "none"
+                });
+            } else {
+                // Show animation
+                gsap.to(navRef.current, {
+                    y: 0,
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.5,
+                    ease: "power2.out",
+                    pointerEvents: "auto"
+                });
+            }
+        }
+    }, [hidden]);
+
     const scrollTo = (id: string) => {
         document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     };
 
     return (
-        <div ref={navRef} className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-auto">
+        <div
+            ref={navRef}
+            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-auto"
+        >
             {/* Dock Container */}
             <div className="flex items-center gap-2 p-2 rounded-2xl border border-zinc-800/60 bg-black/40 backdrop-blur-xl shadow-2xl ring-1 ring-white/5 transition-all duration-300 hover:bg-black/60 hover:border-zinc-700/60 hover:scale-105">
-                
+
                 {navItems.map((item) => {
                     const isActive = activeSection === item.id;
                     const isHovered = hoveredTab === item.id;
                     const Icon = item.icon;
-                    
+
                     return (
                         <Magnetic key={item.id} strength={0.4}>
                             <button
@@ -70,18 +100,18 @@ export const FloatingNavbar: React.FC = () => {
                                     relative group flex flex-col items-center justify-center
                                     w-12 h-12 rounded-xl transition-all duration-300 ease-out
                                     focus:outline-none focus-visible:ring-2 focus-visible:ring-white/20
-                                    ${isActive 
-                                        ? 'bg-zinc-800 text-white shadow-[inset_0px_1px_0px_0px_rgba(255,255,255,0.1)]' 
+                                    ${isActive
+                                        ? 'bg-zinc-800 text-white shadow-[inset_0px_1px_0px_0px_rgba(255,255,255,0.1)]'
                                         : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50'
                                     }
                                 `}
                                 aria-label={item.label}
                             >
                                 {/* Icon */}
-                                <Icon 
-                                    size={20} 
-                                    strokeWidth={isActive ? 2 : 1.5} 
-                                    className={`transition-transform duration-300 ${isHovered ? 'scale-110' : 'scale-100'}`} 
+                                <Icon
+                                    size={20}
+                                    strokeWidth={isActive ? 2 : 1.5}
+                                    className={`transition-transform duration-300 ${isHovered ? 'scale-110' : 'scale-100'}`}
                                 />
 
                                 {/* Active Indicator (Dot) */}
@@ -111,8 +141,10 @@ export const FloatingNavbar: React.FC = () => {
 
                 {/* Quick Action: Resume/CV (Example of Dock "Action") */}
                 <Magnetic strength={0.4}>
-                    <a 
-                        href="#" 
+                    <a
+                        href="https://drive.google.com/file/d/1JjslPgDp8TboJcvraaQLxmgfkGb0mwml/view"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="
                             flex items-center justify-center w-12 h-12 rounded-xl
                             bg-white text-black font-bold font-mono text-xs
