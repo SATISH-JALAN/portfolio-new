@@ -175,18 +175,23 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
 
     return (
         <div ref={modalRef} className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-xl p-4 md:p-8">
-            {/* Close Button Area */}
-            <div className="absolute top-6 right-6 z-50">
-                <button
-                    onClick={onClose}
-                    className="w-12 h-12 rounded-full bg-foreground text-background flex items-center justify-center hover:bg-muted hover:scale-105 transition-all shadow-xl"
-                >
-                    <X size={24} />
-                </button>
-            </div>
-
+            
             {/* Scrollable Container - Stacked Layout */}
-            <div ref={contentRef} className="w-full max-w-4xl max-h-[90vh] bg-background border border-border rounded-lg shadow-2xl overflow-y-auto overflow-x-hidden">
+            <div ref={contentRef} className="w-full max-w-4xl max-h-[90vh] bg-background border border-border rounded-lg shadow-2xl relative overflow-y-auto overflow-x-hidden">
+
+                {/* Sticky Header with Close Button */}
+                <div className="sticky top-0 z-20 flex justify-between items-center bg-background p-4 md:px-8 md:py-6 border-b border-border">
+                    <span className="font-mono text-xs px-3 py-1 rounded-full border border-border text-muted uppercase tracking-wider bg-foreground/5">
+                        {project.year}
+                    </span>
+                    <button
+                        onClick={onClose}
+                        className="w-10 h-10 rounded-full bg-foreground/10 text-foreground flex items-center justify-center hover:bg-foreground hover:text-background transition-colors"
+                        aria-label="Close modal"
+                    >
+                        <X size={20} />
+                    </button>
+                </div>
 
                 {/* Image - Full width, natural height */}
                 <div className="w-full bg-muted/10">
@@ -200,13 +205,6 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
                 {/* Content */}
                 <div className="w-full p-8 md:p-12">
                     <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-6">
-                            <span className="font-mono text-xs px-3 py-1 rounded-full border border-border text-muted uppercase tracking-wider">
-                                {project.year}
-                            </span>
-                            <div className="h-px flex-1 bg-border"></div>
-                        </div>
-
                         <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6 leading-tight">
                             {project.title}
                         </h2>

@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Home, User, Briefcase, Mail } from 'lucide-react';
+import { Home, User, Briefcase, Mail, History } from 'lucide-react';
 import gsap from 'gsap';
 import { Magnetic } from './ui/Magnetic';
 
 const navItems = [
     { id: 'hero', label: 'Home', icon: Home },
     { id: 'work', label: 'Projects', icon: Briefcase },
-    { id: 'about', label: 'Skills & Profile', icon: User },
+    { id: 'about', label: 'Skills & Activity', icon: User },
+    { id: 'experience', label: 'Experience', icon: History },
     { id: 'contact', label: 'Contact', icon: Mail },
 ];
 

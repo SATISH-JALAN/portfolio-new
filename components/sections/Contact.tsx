@@ -185,7 +185,7 @@ export const Contact: React.FC = () => {
 
                 </div>
 
-                <div className="mt-32 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center text-muted font-mono text-xs">
+                <div className="mt-32 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center text-muted font-mono text-xs pb-32">
                     <span>© {new Date().getFullYear()} {PORTFOLIO_DATA.name.toUpperCase()}</span>
                     <span>INDIA</span>
                     <span>DESIGNED & ENGINEERED</span>

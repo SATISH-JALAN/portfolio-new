@@ -32,22 +32,21 @@ const GsapIcon = (props: any) => (
     </svg>
 );
 
-// Combined React + Next.js icon
-const ReactNextIcon = (props: any) => (
-    <div className="flex items-center gap-0.5" {...props}>
-        {/* React Logo */}
-        <svg viewBox="0 0 24 24" fill="#61DAFB" className="w-[1.1em] h-[1.1em]">
-            <circle cx="12" cy="12" r="2.5" />
-            <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61DAFB" strokeWidth="1" />
-            <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61DAFB" strokeWidth="1" transform="rotate(60 12 12)" />
-            <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61DAFB" strokeWidth="1" transform="rotate(120 12 12)" />
-        </svg>
-        <span className="text-[0.6em] text-muted-foreground">/</span>
-        {/* Next.js Logo */}
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-[1.1em] h-[1.1em]">
-            <path d="M18.665 21.978C16.758 23.255 14.465 24 12 24 5.377 24 0 18.623 0 12S5.377 0 12 0s12 5.377 12 12c0 3.583-1.574 6.801-4.067 9.001L9.219 7.2H7.2v9.596h1.615V9.251l9.85 12.727Zm-3.332-8.533 1.6 2.061V7.2h-1.6v6.245Z" />
-        </svg>
-    </div>
+// Separate React Icon
+const ReactIcon = (props: any) => (
+    <svg viewBox="0 0 24 24" fill="#61DAFB" className="w-[1.2em] h-[1.2em]" {...props}>
+        <circle cx="12" cy="12" r="2.5" />
+        <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61DAFB" strokeWidth="1" />
+        <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61DAFB" strokeWidth="1" transform="rotate(60 12 12)" />
+        <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61DAFB" strokeWidth="1" transform="rotate(120 12 12)" />
+    </svg>
+);
+
+// Separate Next.js Icon
+const NextJsIcon = (props: any) => (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-[1.2em] h-[1.2em]" {...props}>
+        <path d="M18.665 21.978C16.758 23.255 14.465 24 12 24 5.377 24 0 18.623 0 12S5.377 0 12 0s12 5.377 12 12c0 3.583-1.574 6.801-4.067 9.001L9.219 7.2H7.2v9.596h1.615V9.251l9.85 12.727Zm-3.332-8.533 1.6 2.061V7.2h-1.6v6.245Z" />
+    </svg>
 );
 
 const WebSocketIcon = (props: any) => (
@@ -65,10 +64,9 @@ const ICON_MAP: Record<string, React.FC<any> | null> = {
     'nodejs': NodeJsIcon,
     'rust': RustIcon,
     'gsap': GsapIcon,
-    'react': ReactNextIcon,
-    'react / next.js': ReactNextIcon,
-    'next.js': ReactNextIcon,
-    'nextjs': ReactNextIcon,
+    'react': ReactIcon,
+    'next.js': NextJsIcon,
+    'nextjs': NextJsIcon,
     'websocket': WebSocketIcon,
     'socket.io': WebSocketIcon,
 };
@@ -76,19 +74,12 @@ const ICON_MAP: Record<string, React.FC<any> | null> = {
 // Devicon class mapping
 const DEVICON_MAP: Record<string, string> = {
     'typescript': 'devicon-typescript-plain colored',
-    'tailwind': 'devicon-tailwindcss-original colored',
-    'tailwindcss': 'devicon-tailwindcss-original colored',
     'firebase': 'devicon-firebase-plain colored',
     'mongodb': 'devicon-mongodb-plain colored',
     'postgresql': 'devicon-postgresql-plain colored',
     'postgres': 'devicon-postgresql-plain colored',
     'redis': 'devicon-redis-plain colored',
     'docker': 'devicon-docker-plain colored',
-    'solidity': 'devicon-solidity-plain text-gray-300',
-    'express': 'devicon-express-original text-white',
-    'express.js': 'devicon-express-original text-white',
-    'expressjs': 'devicon-express-original text-white',
-    'prisma': 'devicon-prisma-original colored',
     'git': 'devicon-git-plain colored',
     'python': 'devicon-python-plain colored',
     'java': 'devicon-java-plain colored',
@@ -105,9 +96,19 @@ const DEVICON_MAP: Record<string, string> = {
 
 // Fallback Lucide icons for special cases
 const FALLBACK_MAP: Record<string, LucideIcon> = {
+    'tailwind': Layout,
+    'framer': Layers,
+    'express': Terminal,
+    'rest': Globe,
+    'graphql': Database,
+    'prisma': Database,
+    'vercel': Globe,
+    'aws': Globe,
+    'solidity': Code2,
+    'ethers': Cpu,
+    'hardhat': Terminal,
     'gemini': Cpu,
     'shadcn': Layout,
-    'framer': Layers,
     'zod': Layers,
     'stellar': Globe,
     'soroban': Globe,
@@ -142,11 +143,11 @@ export const TechBadge: React.FC<TechBadgeProps> = ({ name }) => {
     const { iconClass, FallbackIcon } = getTechIconInfo(name);
 
     return (
-        <Badge className="bg-muted/10 hover:bg-muted/20 text-foreground/80 hover:text-foreground border-border/50 transition-colors flex items-center gap-1.5 px-3 py-1.5">
+        <Badge className="bg-foreground/5 hover:bg-foreground/10 text-foreground/90 hover:text-foreground border-border/40 transition-colors flex items-center gap-2 px-3 py-1.5 rounded-lg font-medium">
             {iconClass ? (
                 <i className={`${iconClass} text-lg`} />
             ) : (
-                <FallbackIcon size={14} className="opacity-70" />
+                <FallbackIcon size={14} className="opacity-70 text-foreground" />
             )}
             <span className="font-mono text-xs">{name}</span>
         </Badge>

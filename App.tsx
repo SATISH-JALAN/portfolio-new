@@ -4,7 +4,6 @@ import { About } from './components/sections/About';
 import { Projects } from './components/sections/Projects';
 import { YearReview } from './components/sections/YearReview';
 import { Contact } from './components/sections/Contact';
-import { Goals2026 } from './components/pages/Goals2026';
 import { CursorTrail } from './components/CursorTrail';
 import { ScrollToTop } from './components/ScrollToTop';
 import { FloatingNavbar } from './components/FloatingNavbar';
@@ -18,7 +17,6 @@ import gsap from 'gsap';
 const AppContent: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
-  const [currentView, setCurrentView] = useState<'home' | 'goals'>('home');
   const progressBarRef = useRef<HTMLDivElement>(null);
 
   // Lock scroll during loading or modal open
@@ -36,11 +34,6 @@ const AppContent: React.FC = () => {
       window.scrollTo(0, 0);
     }
   }, [loading]);
-
-  // Scroll to top when view changes
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [currentView]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,15 +54,6 @@ const AppContent: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavigate = (view: 'wrap' | 'goals') => {
-    // Fade out effect could be added here if we wrapped content in a ref
-    setCurrentView(view);
-  };
-
-  const handleBack = () => {
-    setCurrentView('home');
-  };
-
   return (
     <>
       {/* Show Preloader until loading is false */}
@@ -77,28 +61,23 @@ const AppContent: React.FC = () => {
 
       <div className={`min-h-screen bg-background text-foreground font-sans selection:bg-accent selection:text-accent-foreground transition-colors duration-500 ${loading ? 'h-screen overflow-hidden pointer-events-none opacity-0' : 'opacity-100'}`}>
 
-        {/* Scroll Progress Bar - Only on Home */}
-        {currentView === 'home' && (
-          <div className="fixed top-0 left-0 w-full h-1 z-[60] mix-blend-difference pointer-events-none">
-            <div ref={progressBarRef} className="h-full bg-white w-full scale-x-0" />
-          </div>
-        )}
+        {/* Scroll Progress Bar */}
+        <div className="fixed top-0 left-0 w-full h-1 z-[60] mix-blend-difference pointer-events-none">
+          <div ref={progressBarRef} className="h-full bg-white w-full scale-x-0" />
+        </div>
 
         <CursorTrail />
 
-        {/* Only show scroll to top on home */}
-        {currentView === 'home' && <ScrollToTop />}
+        <ScrollToTop />
 
-        {/* Navbar hidden on sub-pages for "distinct page" feel */}
-        {currentView === 'home' && <FloatingNavbar hidden={isProjectModalOpen} />}
+        <FloatingNavbar hidden={isProjectModalOpen} />
 
-        {/* Theme Toggle - Hidden when modal is open OR when on sub-pages (optional, but keeping it visible on sub-pages is better UX) */}
         <ThemeToggle hidden={isProjectModalOpen} />
 
         {/* Top Bar - Absolute Position (Scrolls with page) */}
         <nav className="absolute top-0 left-0 right-0 z-40 py-6 pointer-events-none">
           <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-            <button onClick={() => setCurrentView('home')} className="font-display font-bold text-xl tracking-tight text-foreground uppercase pointer-events-auto mix-blend-difference group">
+            <button className="font-display font-bold text-xl tracking-tight text-foreground uppercase pointer-events-auto mix-blend-difference group">
               <TextScramble text={PORTFOLIO_DATA.name.split(' ')[0]} />
               <span className="text-muted group-hover:text-accent transition-colors">.</span>
             </button>
@@ -110,18 +89,12 @@ const AppContent: React.FC = () => {
           </div>
         </nav>
 
-        <main className="relative z-10">
-          {currentView === 'home' ? (
-            <>
-              <Hero loading={loading} />
-              <Projects onModalOpen={setIsProjectModalOpen} />
-              <About />
-              <YearReview onNavigate={handleNavigate} />
-              <Contact />
-            </>
-          ) : (
-            <Goals2026 onBack={handleBack} />
-          )}
+        <main className="relative z-10 pb-32 md:pb-40">
+          <Hero loading={loading} />
+          <Projects onModalOpen={setIsProjectModalOpen} />
+          <About />
+          <YearReview />
+          <Contact />
         </main>
       </div>
     </>

@@ -1,10 +1,8 @@
-
 import React, { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { SKILLS, EXPERIENCE, PORTFOLIO_DATA, EDUCATION } from '../../constants';
+import { SKILLS } from '../../constants';
 import { GithubGraph } from '../ui/GithubGraph';
-import { Download, ArrowUpRight } from 'lucide-react';
 import { getTechIconInfo } from '../ui/TechBadge';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -19,7 +17,7 @@ export const About: React.FC = () => {
                 gsap.fromTo(selector,
                     {
                         y: 30,
-                        autoAlpha: 0 // logic: visibility hidden until animation starts
+                        autoAlpha: 0
                     },
                     {
                         y: 0,
@@ -29,26 +27,17 @@ export const About: React.FC = () => {
                         ease: "power3.out",
                         scrollTrigger: {
                             trigger: trigger,
-                            start: "top 90%", // Triggers earlier to avoid empty screens
+                            start: "top 90%",
                             toggleActions: "play none none reverse"
                         }
                     }
                 );
             };
 
-            // 1. Profile Section
-            animateIn(".profile-section", ".profile-section");
-
-            // 2. Experience Items (Staggered)
-            const experienceItems = gsap.utils.toArray('.experience-item');
-            experienceItems.forEach((item: any) => {
-                animateIn(item, item);
-            });
-
-            // 3. Tech Items (Grid Stagger)
+            // Tech Items (Grid Stagger)
             animateIn(".tech-item", ".tech-grid", 0.05);
 
-            // 4. Contributions
+            // Contributions
             animateIn(".contributions-wrapper", ".contributions-wrapper");
 
         }, containerRef);
@@ -63,203 +52,82 @@ export const About: React.FC = () => {
 
             <div ref={containerRef} className="container px-4 md:px-6 mx-auto relative z-10">
 
-                {/* Changed from Grid to Flex Column to stack sections vertically */}
                 <div className="flex flex-col gap-24 lg:gap-32">
 
-                    {/* Top Section: Profile & Bio */}
-                    <div className="w-full max-w-6xl mx-auto profile-section opacity-0 grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-start">
-                        {/* Heading Column */}
-                        <div className="text-left lg:sticky lg:top-32">
-                            <span className="font-mono text-xs text-muted/60 uppercase tracking-widest mb-6 block">01 / Profile</span>
-                            <h2 className="text-5xl md:text-7xl font-display font-medium text-foreground tracking-tighter leading-[0.9]">
-                                About<br />Me.
+                    {/* Technologies */}
+                    <div className="w-full max-w-6xl mx-auto tech-grid grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-start">
+                        {/* Header Column */}
+                        <div className="text-left">
+                            <span className="font-mono text-xs text-muted/60 uppercase tracking-widest mb-6 block">01 / Ecosystem</span>
+                            <h2 className="text-4xl md:text-6xl font-display font-medium text-foreground tracking-tighter leading-[0.9]">
+                                Tech<br />Stack.
                             </h2>
                         </div>
 
-                        {/* Content Column */}
-                        <div className="space-y-8 text-left pt-2 lg:pt-0">
-                            <div className="inline-flex">
-                                <h3 className="text-sm font-mono text-primary bg-foreground/5 px-3 py-1.5 rounded-sm border border-foreground/10 uppercase tracking-wider">
-                                    {PORTFOLIO_DATA.role}
-                                </h3>
-                            </div>
-
-                            <p className="text-foreground/90 text-xl md:text-2xl leading-relaxed font-light">
-                                {PORTFOLIO_DATA.bio}
-                            </p>
-
-                            <div className="space-y-5 text-muted">
-                                <p className="text-base md:text-lg leading-relaxed">
-                                    I'm deeply active in the Web3 space, working on DeFi tools, GameFi, SocioFi, and developer-focused infrastructure.
-                                </p>
-
-                                <p className="text-base md:text-lg leading-relaxed">
-                                    Hackathons and open-source projects fuel my growth—I believe in shipping bold ideas and building toward a faster, more open, and decentralized internet.
-                                </p>
-                            </div>
-
-                            <div className="pt-4">
-                                <a href="https://drive.google.com/file/d/1JjslPgDp8TboJcvraaQLxmgfkGb0mwml/view" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 text-sm font-mono text-foreground border-b border-foreground pb-1 hover:opacity-70 transition-opacity group">
-                                    <Download size={16} />
-                                    <span>Resume</span>
-                                    <ArrowUpRight size={14} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Bottom Section: Detailed Content */}
-                    <div className="w-full space-y-24">
-
-                        {/* Experience Timeline */}
-                        {/* Experience Timeline */}
-                        {/* Experience Timeline */}
-                        <div className="w-full max-w-6xl mx-auto experience-section grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-start">
-                            {/* Header Column */}
-                            <div className="text-left lg:sticky lg:top-64 lg:pt-32">
-                                <span className="font-mono text-xs text-muted/60 uppercase tracking-widest mb-6 block">02 / Work</span>
-                                <h2 className="text-4xl md:text-6xl font-display font-medium text-foreground tracking-tighter leading-[0.9]">
-                                    Selected<br />Experience.
-                                </h2>
-                            </div>
-
-                            {/* Content Column */}
-                            <div className="border-l border-border ml-3 space-y-12 pb-4 pt-2 lg:pt-0">
-                                {EXPERIENCE.map((exp) => (
-                                    <div key={exp.id} className="experience-item relative pl-8 md:pl-12 group">
-
-                                        {/* Timeline Dot & Halo */}
-                                        <div className="absolute top-3 left-0 -translate-x-1/2 flex items-center justify-center">
-                                            {/* Halo Effect (Visible on Hover) */}
-                                            <div className="w-8 h-8 rounded-full bg-foreground/10 opacity-0 group-hover:opacity-100 transition-all duration-500 scale-0 group-hover:scale-100 absolute" />
-
-                                            {/* Core Dot */}
-                                            <div className="w-2.5 h-2.5 rounded-full bg-background border border-muted group-hover:bg-foreground group-hover:border-foreground transition-colors duration-300 relative z-10 shadow-sm" />
-                                        </div>
-
-                                        {exp.link ? (
-                                            <a href={exp.link} target="_blank" rel="noopener noreferrer" className="block cursor-pointer">
-                                                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-2">
-                                                    <h4 className="text-2xl text-muted font-display font-medium group-hover:text-foreground transition-colors duration-300">{exp.company}</h4>
-                                                    <span className="font-mono text-xs text-muted mt-1 sm:mt-0 px-2 py-1 bg-foreground/5 border border-border rounded group-hover:border-muted transition-colors">{exp.period}</span>
-                                                </div>
-                                                <h5 className="text-sm font-mono text-muted mb-4 group-hover:text-foreground/70 transition-colors">{exp.role}</h5>
-                                                <p className="text-muted leading-relaxed max-w-2xl group-hover:text-foreground/80 transition-colors duration-300">
-                                                    {exp.description}
-                                                </p>
-                                            </a>
-                                        ) : (
-                                            <div className="cursor-default">
-                                                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-2">
-                                                    <h4 className="text-2xl text-muted font-display font-medium group-hover:text-foreground transition-colors duration-300">{exp.company}</h4>
-                                                    <span className="font-mono text-xs text-muted mt-1 sm:mt-0 px-2 py-1 bg-foreground/5 border border-border rounded group-hover:border-muted transition-colors">{exp.period}</span>
-                                                </div>
-                                                <h5 className="text-sm font-mono text-muted mb-4 group-hover:text-foreground/70 transition-colors">{exp.role}</h5>
-                                                <p className="text-muted leading-relaxed max-w-2xl group-hover:text-foreground/80 transition-colors duration-300">
-                                                    {exp.description}
-                                                </p>
-                                            </div>
-                                        )}
+                        {/* Content Column - Category Groups */}
+                        <div className="space-y-12 pt-2 lg:pt-0">
+                            {SKILLS.map((category, catIndex) => (
+                                <div key={catIndex} className="space-y-6">
+                                    <div className="flex items-center gap-4 mb-2">
+                                        <h3 className="text-sm font-mono text-muted uppercase tracking-widest whitespace-nowrap">{category.title}</h3>
+                                        <div className="h-px w-full bg-border/50"></div>
                                     </div>
-                                ))}
-                            </div>
-                        </div>
+                                    <div className="flex flex-wrap gap-2.5">
+                                        {category.items.map((skill, i) => {
+                                            const iconInfo = getTechIconInfo(skill.name);
+                                            const iconClass = iconInfo?.iconClass;
+                                            const FallbackIcon = iconInfo?.FallbackIcon;
 
-                        {/* Education */}
-                        <div className="w-full max-w-6xl mx-auto education-section grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-start">
-                            {/* Header Column */}
-                            <div className="text-left lg:sticky lg:top-64 lg:pt-32">
-                                <span className="font-mono text-xs text-muted/60 uppercase tracking-widest mb-6 block">03 / Education</span>
-                                <h2 className="text-4xl md:text-6xl font-display font-medium text-foreground tracking-tighter leading-[0.9]">
-                                    Academic<br />Background.
-                                </h2>
-                            </div>
-
-                            {/* Content Column */}
-                            <div className="space-y-8 pt-2 lg:pt-0">
-                                {EDUCATION.map((edu) => (
-                                    <div key={edu.id} className="education-item group relative p-6 border border-border bg-foreground/5 hover:bg-foreground/10 transition-all duration-300 rounded-sm">
-                                        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-3">
-                                            <h4 className="text-xl text-foreground font-display font-medium">{edu.institution}</h4>
-                                            <span className="font-mono text-xs text-muted mt-1 sm:mt-0 px-2 py-1 bg-foreground/5 border border-border rounded">{edu.period}</span>
-                                        </div>
-                                        <h5 className="text-sm font-mono text-muted mb-2">{edu.degree}</h5>
-                                        {edu.location && (
-                                            <p className="text-xs text-muted/70">{edu.location}</p>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Technologies */}
-                        {/* Technologies */}
-                        <div className="w-full max-w-6xl mx-auto tech-grid grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-start">
-                            {/* Header Column */}
-                            <div className="text-left">
-                                <span className="font-mono text-xs text-muted/60 uppercase tracking-widest mb-6 block">04 / Tools</span>
-                                <h2 className="text-4xl md:text-6xl font-display font-medium text-foreground tracking-tighter leading-[0.9]">
-                                    Tech<br />Stack.
-                                </h2>
-                            </div>
-
-                            {/* Content Column - Category Groups */}
-                            <div className="space-y-12 pt-2 lg:pt-0">
-                                {SKILLS.map((category, catIndex) => (
-                                    <div key={catIndex} className="space-y-6">
-                                        <h3 className="text-xl font-display text-muted border-b border-border pb-2">{category.title}</h3>
-                                        <div className="grid grid-cols-2 gap-4">
-                                            {category.items.map((skill, i) => {
-                                                const { iconClass, FallbackIcon } = getTechIconInfo(skill.name);
-
-                                                return (
-                                                    <div key={i} className="tech-item group relative p-5 border border-border bg-foreground/5 hover:bg-foreground hover:text-background transition-all duration-300 rounded-sm">
-                                                        {/* Icon Header */}
-                                                        <div className="mb-4 text-3xl text-foreground group-hover:text-background transition-colors duration-300">
-                                                            {iconClass ? (
-                                                                <i className={`${iconClass}`} />
-                                                            ) : (
-                                                                <FallbackIcon size={32} strokeWidth={1.5} />
-                                                            )}
-                                                        </div>
-
-                                                        <div className="font-mono text-sm text-foreground group-hover:text-background mb-2 transition-colors font-bold">{skill.name}</div>
-
-                                                        <div className="text-[10px] text-muted group-hover:text-background/70 transition-colors leading-tight">
-                                                            {skill.description}
-                                                        </div>
-
-                                                        {/* Decorative Corner */}
-                                                        <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-border group-hover:border-background/50 transition-colors opacity-0 group-hover:opacity-100"></div>
+                                            return (
+                                                <div 
+                                                    key={i} 
+                                                    className="tech-item group flex items-center gap-2.5 px-3 py-1.5 border border-border/40 bg-foreground/[0.02] hover:bg-foreground/[0.08] hover:border-foreground/20 transition-all duration-300 rounded-lg cursor-default"
+                                                    title={skill.description}
+                                                >
+                                                    {/* Icon Header */}
+                                                    <div className="text-base text-muted group-hover:text-foreground transition-colors duration-300 flex items-center justify-center">
+                                                        {iconClass ? (
+                                                            <i className={`${iconClass}`} />
+                                                        ) : FallbackIcon ? (
+                                                            <FallbackIcon size={16} strokeWidth={2} />
+                                                        ) : (
+                                                            <div className="w-4 h-4 rounded-full bg-foreground/20" />
+                                                        )}
                                                     </div>
-                                                );
-                                            })}
-                                        </div>
+
+                                                    <span className="font-mono text-xs font-medium tracking-wide text-foreground/80 group-hover:text-foreground transition-colors">
+                                                        {skill.name}
+                                                    </span>
+                                                </div>
+                                            );
+                                        })}
                                     </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Contributions Graph */}
-                        {/* Contributions Graph */}
-                        <div className="w-full max-w-6xl mx-auto contributions-wrapper opacity-0 grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-start">
-                            {/* Header Column */}
-                            <div className="text-left lg:sticky lg:top-32">
-                                <span className="font-mono text-xs text-muted/60 uppercase tracking-widest mb-6 block">05 / Code</span>
-                                <h2 className="text-4xl md:text-6xl font-display font-medium text-foreground tracking-tighter leading-[0.9]">
-                                    Open<br />Source.
-                                </h2>
-                            </div>
-
-                            {/* Content Column */}
-                            <div className="pt-2 lg:pt-0">
-                                <div className="p-6 border border-border bg-foreground/5 rounded-sm hover:border-muted transition-colors">
-                                    <GithubGraph />
                                 </div>
-                            </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Contributions Graph */}
+                    <div className="w-full max-w-6xl mx-auto contributions-wrapper opacity-0 grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-start">
+                        {/* Header Column */}
+                        <div className="text-left lg:sticky lg:top-32">
+                            <span className="font-mono text-xs text-muted/60 uppercase tracking-widest mb-6 block">02 / Code</span>
+                            <h2 className="text-4xl md:text-6xl font-display font-medium text-foreground tracking-tighter leading-[0.9]">
+                                Open<br />Source.
+                            </h2>
+                            <p className="mt-8 text-muted leading-relaxed">
+                                Constant shipping, continuous learning. I actively contribute to the ecosystems I rely on and build tools that accelerate the community.
+                            </p>
                         </div>
 
+                        {/* Content Column */}
+                        <div className="pt-2 lg:pt-0">
+                            <div className="p-6 border border-border bg-foreground/5 rounded-sm hover:border-muted transition-colors">
+                                <GithubGraph />
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </section>

@@ -1,14 +1,12 @@
-
 import React, { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, Calendar, CheckSquare } from 'lucide-react';
-import { Button } from '../ui/Elements';
+import { EXPERIENCE, EDUCATION } from '../../constants';
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface YearReviewProps {
-    onNavigate: (page: 'wrap' | 'goals') => void;
+    onNavigate?: (page: 'wrap' | 'goals') => void;
 }
 
 export const YearReview: React.FC<YearReviewProps> = ({ onNavigate }) => {
@@ -16,65 +14,131 @@ export const YearReview: React.FC<YearReviewProps> = ({ onNavigate }) => {
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            // Set initial state - card is visible but positioned down
-            gsap.set(".review-card", { y: 30, opacity: 1 });
+            const animateIn = (selector: string | Element, trigger: string | Element, stagger = 0) => {
+                gsap.fromTo(selector,
+                    {
+                        y: 30,
+                        autoAlpha: 0
+                    },
+                    {
+                        y: 0,
+                        autoAlpha: 1,
+                        duration: 0.8,
+                        stagger: stagger,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: trigger,
+                            start: "top 90%",
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            };
 
-            // Animate to final position when scrolled into view
-            gsap.to(".review-card", {
-                scrollTrigger: {
-                    trigger: containerRef.current,
-                    start: "top 85%",
-                    toggleActions: "play none none none"
-                },
-                y: 0,
-                opacity: 1,
-                duration: 0.6,
-                ease: "power3.out"
+            const experienceItems = gsap.utils.toArray('.experience-item');
+            experienceItems.forEach((item: any) => {
+                animateIn(item, item);
             });
+
+            const educationItems = gsap.utils.toArray('.education-item');
+            educationItems.forEach((item: any) => {
+                animateIn(item, item);
+            });
+
         }, containerRef);
 
         return () => ctx.revert();
     }, []);
 
     return (
-        <section ref={containerRef} className="review-section py-32 bg-background relative overflow-hidden">
+        <section id="experience" ref={containerRef} className="review-section py-32 bg-background relative overflow-hidden">
             <div className="container px-4 md:px-6 mx-auto">
-                <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-center">
+                <div className="flex flex-col gap-24 lg:gap-32">
+                    
+                    {/* Experience Timeline */}
+                    <div className="w-full max-w-6xl mx-auto experience-section grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-start">
+                        {/* Header Column */}
+                        <div className="text-left lg:sticky lg:top-32">
+                            <span className="font-mono text-xs text-muted/60 uppercase tracking-widest mb-6 block">03 / Work</span>
+                            <h2 className="text-4xl md:text-6xl font-display font-medium text-foreground tracking-tighter leading-[0.9]">
+                                Selected<br />Experience.
+                            </h2>
+                        </div>
 
-                    {/* Header Column */}
-                    <div className="text-left">
-                        <span className="font-mono text-xs text-muted/60 uppercase tracking-widest mb-2 block">05 / Vision</span>
-                        <h2 className="text-4xl md:text-6xl font-display font-medium text-foreground tracking-tighter leading-[0.9]">
-                            2026<br />Goals.
-                        </h2>
-                    </div>
+                        {/* Content Column */}
+                        <div className="relative ml-0 md:ml-4 pl-8 md:pl-12 space-y-16 pb-4 pt-2 lg:pt-0">
+                            {/* Gradient Timeline Line */}
+                            <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-border to-transparent"></div>
 
-                    {/* Content Column */}
-                    <div className="pt-2 lg:pt-0">
-                        <div
-                            onClick={() => onNavigate('goals')}
-                            className="review-card group relative border border-border bg-foreground/5 p-8 md:p-12 cursor-pointer hover:bg-foreground/10 transition-colors duration-500 rounded-sm"
-                        >
-                            <div className="absolute top-8 right-8 text-muted group-hover:text-foreground transition-colors">
-                                <CheckSquare size={32} />
-                            </div>
+                            {EXPERIENCE.map((exp) => (
+                                <div key={exp.id} className="experience-item relative group">
+                                    {/* Timeline Dot & Halo */}
+                                    <div className="absolute top-2 -left-8 md:-left-12 -translate-x-[0.5px] flex items-center justify-center">
+                                        <div className="w-8 h-8 rounded-full bg-foreground/10 opacity-0 group-hover:opacity-100 transition-all duration-500 scale-0 group-hover:scale-100 absolute" />
+                                        <div className="w-2.5 h-2.5 rounded-full bg-background border-2 border-muted group-hover:bg-foreground group-hover:border-foreground transition-colors duration-300 relative z-10 shadow-sm" />
+                                    </div>
 
-                            <div className="space-y-6">
-                                <span className="font-mono text-xs text-orange-500 block uppercase tracking-widest">In Progress</span>
-
-                                <p className="text-lg md:text-xl text-muted leading-relaxed max-w-lg group-hover:text-foreground/80 transition-colors">
-                                    The roadmap ahead. Technical targets, habit tracking, and the vision for the upcoming year.
-                                </p>
-
-                                <div className="flex items-center gap-4 text-foreground font-mono text-sm uppercase tracking-wider group-hover:gap-6 transition-all pt-4">
-                                    View Checklist <ArrowRight size={16} />
+                                    {exp.link ? (
+                                        <a href={exp.link} target="_blank" rel="noopener noreferrer" className="block cursor-pointer">
+                                            <div className="flex flex-col mb-4">
+                                                <h4 className="text-2xl text-foreground/90 font-display font-medium group-hover:text-foreground transition-colors duration-300 mb-1">{exp.role}</h4>
+                                                <div className="flex flex-wrap items-center gap-3 text-sm">
+                                                    <span className="font-mono text-muted/80">{exp.company}</span>
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-border"></span>
+                                                    <span className="font-mono text-muted bg-foreground/5 px-2 py-0.5 rounded">{exp.period}</span>
+                                                </div>
+                                            </div>
+                                            <p className="text-muted leading-relaxed max-w-2xl group-hover:text-foreground/80 transition-colors duration-300">
+                                                {exp.description}
+                                            </p>
+                                        </a>
+                                    ) : (
+                                        <div className="cursor-default">
+                                            <div className="flex flex-col mb-4">
+                                                <h4 className="text-2xl text-foreground/90 font-display font-medium group-hover:text-foreground transition-colors duration-300 mb-1">{exp.role}</h4>
+                                                <div className="flex flex-wrap items-center gap-3 text-sm">
+                                                    <span className="font-mono text-muted/80">{exp.company}</span>
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-border"></span>
+                                                    <span className="font-mono text-muted bg-foreground/5 px-2 py-0.5 rounded">{exp.period}</span>
+                                                </div>
+                                            </div>
+                                            <p className="text-muted leading-relaxed max-w-2xl group-hover:text-foreground/80 transition-colors duration-300">
+                                                {exp.description}
+                                            </p>
+                                        </div>
+                                    )}
                                 </div>
-                            </div>
-
-                            {/* Background Decoration */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent pointer-events-none" />
+                            ))}
                         </div>
                     </div>
+
+                    {/* Education */}
+                    <div className="w-full max-w-6xl mx-auto education-section grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-start pb-24">
+                        {/* Header Column */}
+                        <div className="text-left lg:sticky lg:top-32">
+                            <span className="font-mono text-xs text-muted/60 uppercase tracking-widest mb-6 block">04 / Education</span>
+                            <h2 className="text-4xl md:text-6xl font-display font-medium text-foreground tracking-tighter leading-[0.9]">
+                                Academic<br />Background.
+                            </h2>
+                        </div>
+
+                        {/* Content Column */}
+                        <div className="space-y-8 pt-2 lg:pt-0">
+                            {EDUCATION.map((edu) => (
+                                <div key={edu.id} className="education-item group relative p-6 border border-border bg-foreground/5 hover:bg-foreground/10 transition-all duration-300 rounded-sm">
+                                    <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-3">
+                                        <h4 className="text-xl text-foreground font-display font-medium">{edu.institution}</h4>
+                                        <span className="font-mono text-xs text-muted mt-1 sm:mt-0 px-2 py-1 bg-foreground/5 border border-border rounded">{edu.period}</span>
+                                    </div>
+                                    <h5 className="text-sm font-mono text-muted mb-2">{edu.degree}</h5>
+                                    {edu.location && (
+                                        <p className="text-xs text-muted/70">{edu.location}</p>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>

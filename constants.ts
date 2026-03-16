@@ -173,9 +173,9 @@ export const EXPERIENCE: Experience[] = [
      {
         id: 1,
         role: "HQ Contributor",
-        company: "Hackquest",
+        company: "HackQuest",
         period: "Nov 2025 — Present",
-        description: "Collaborating, innovating and building a stronger Web3 ecosystem in India with industry experts."
+        description: "Actively contributing to the HackQuest platform and community, creating technical educational content and fostering Web3 adoption across the Indian developer ecosystem."
     },
     {
         id: 2,
@@ -197,7 +197,7 @@ export const EXPERIENCE: Experience[] = [
     {
         id: 4,
         role: "Developer Advocate",
-        company: "HACKQUEST",
+        company: "HackQuest",
         period: "Feb 2025 — Nov 2025",
         description: "Collaborated, innovated and built a stronger Web3 ecosystem in India with industry experts.",
         link: "https://www.linkedin.com/posts/satish-jalan_web3-hackquest-innovation-activity-7289246328117760000-WY6-?utm_source=share&utm_medium"
