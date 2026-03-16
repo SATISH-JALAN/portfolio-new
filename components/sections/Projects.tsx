@@ -217,9 +217,62 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
                             ))}
                         </div>
 
-                        <p className="text-muted text-lg leading-relaxed mb-8">
+                        <p className="text-foreground/80 text-lg leading-relaxed mb-10 font-medium">
                             {project.longDescription || project.description}
                         </p>
+
+                        {/* Expandable Case Study Section */}
+                        {project.caseStudy && (
+                            <div className="space-y-12 mt-12 bg-muted/5 p-6 md:p-8 rounded-lg border border-border">
+                                <div className="flex items-center gap-3 mb-8">
+                                    <div className="h-px flex-1 bg-border"></div>
+                                    <span className="font-mono text-xs text-foreground uppercase tracking-widest font-bold">Case Study</span>
+                                    <div className="h-px flex-1 bg-border"></div>
+                                </div>
+
+                                {project.caseStudy.problemStatement && (
+                                    <div className="group">
+                                        <h4 className="text-xl font-display font-medium text-foreground mb-4 flex items-center gap-2"><span className="text-muted text-sm font-mono">01.</span> The Problem</h4>
+                                        <p className="text-muted leading-relaxed text-sm md:text-base">{project.caseStudy.problemStatement}</p>
+                                    </div>
+                                )}
+
+                                {project.caseStudy.systemArchitecture && (
+                                    <div className="group border-t border-border pt-8">
+                                        <h4 className="text-xl font-display font-medium text-foreground mb-4 flex items-center gap-2"><span className="text-muted text-sm font-mono">02.</span> Architecture & Design</h4>
+                                        <p className="text-muted leading-relaxed text-sm md:text-base whitespace-pre-line">{project.caseStudy.systemArchitecture}</p>
+                                    </div>
+                                )}
+
+                                {project.caseStudy.techDecisions && project.caseStudy.techDecisions.length > 0 && (
+                                    <div className="group border-t border-border pt-8">
+                                        <h4 className="text-xl font-display font-medium text-foreground mb-4 flex items-center gap-2"><span className="text-muted text-sm font-mono">03.</span> Technical Decisions</h4>
+                                        <ul className="space-y-3">
+                                            {project.caseStudy.techDecisions.map((decision, idx) => (
+                                                <li key={idx} className="flex gap-3 text-sm md:text-base text-muted">
+                                                    <span className="text-foreground font-bold mt-1">»</span>
+                                                    <span className="leading-relaxed">{decision}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+
+                                {project.caseStudy.engineeringChallenges && project.caseStudy.engineeringChallenges.length > 0 && (
+                                    <div className="group border-t border-border pt-8">
+                                        <h4 className="text-xl font-display font-medium text-foreground mb-4 flex items-center gap-2"><span className="text-muted text-sm font-mono">04.</span> Core Engineering Challenges</h4>
+                                        <ul className="space-y-3">
+                                            {project.caseStudy.engineeringChallenges.map((challenge, idx) => (
+                                                <li key={idx} className="flex gap-3 text-sm md:text-base text-muted">
+                                                    <span className="text-red-400 mt-1">!</span>
+                                                    <span className="leading-relaxed">{challenge}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
 
                     <div className="mt-8 pt-8 border-t border-border flex flex-col sm:flex-row gap-4">

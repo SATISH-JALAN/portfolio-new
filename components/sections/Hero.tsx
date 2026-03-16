@@ -103,8 +103,8 @@ export const Hero: React.FC<HeroProps> = ({ loading = false }) => {
                 <div className="order-1 lg:order-2 flex flex-col items-center lg:items-start text-center lg:text-left">
 
                     {/* Greeting */}
-                    <p className="hero-fade text-muted text-lg md:text-xl tracking-widest uppercase mb-4">
-                        Hey! It's me
+                    <p className="hero-fade text-muted text-lg md:text-xl tracking-widest uppercase mb-4 font-mono">
+                        // Software Engineer
                     </p>
 
                     {/* Name - Signature Style */}
@@ -115,35 +115,55 @@ export const Hero: React.FC<HeroProps> = ({ loading = false }) => {
                     </h1>
 
                     {/* Role */}
-                    <p className="hero-fade text-foreground/60 text-base md:text-lg tracking-wide mb-3">
-                        {PORTFOLIO_DATA.role}
+                    <p className="hero-fade text-foreground/80 font-mono text-base md:text-lg tracking-wide mb-3 flex items-center gap-2">
+                        <span className="text-accent">&gt;</span> {PORTFOLIO_DATA.role}
                     </p>
 
                     {/* Short Bio */}
-                    <p className="hero-fade text-muted text-sm md:text-base leading-relaxed max-w-md mb-8">
-                        {PORTFOLIO_DATA.bio}
+                    <p className="hero-fade text-muted text-sm md:text-base leading-relaxed max-w-lg mb-8">
+                        {PORTFOLIO_DATA.bio} 
+                        <br/><br/>
+                        Specializing in modern web technologies, building scalable architectures, and crafting intuitive user experiences from the ground up.
                     </p>
 
                     {/* CTA & Status Row */}
-                    <div className="hero-fade flex flex-col sm:flex-row items-center gap-6">
+                    <div className="hero-fade flex flex-wrap items-center gap-4">
                         <Button
                             onClick={scrollToWork}
                             size="lg"
-                            className="bg-foreground text-background hover:bg-foreground/90 rounded-none uppercase font-medium tracking-widest text-sm px-8"
+                            className="bg-foreground text-background hover:bg-foreground/90 rounded-sm font-mono font-medium tracking-widest text-xs px-6 py-4 transition-all duration-300 shadow-md"
                         >
-                            View Work <ArrowRight className="ml-3 w-4 h-4" />
+                            View Projects <ArrowRight className="ml-2 w-4 h-4" />
                         </Button>
+                        
+                        <a href={SOCIALS.find(s => s.platform === 'GitHub')?.url} target="_blank" rel="noreferrer">
+                            <Button
+                                size="lg"
+                                className="bg-transparent border border-border text-foreground hover:bg-foreground/5 rounded-sm font-mono font-medium tracking-widest text-xs px-6 py-4 flex items-center gap-2 transition-all duration-300"
+                            >
+                                <Github className="w-4 h-4" /> GitHub
+                            </Button>
+                        </a>
 
-                        {/* Availability */}
-                        <div className="flex items-center gap-2">
-                            <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                            </span>
-                            <span className="font-mono text-xs text-muted uppercase tracking-wider">
-                                {PORTFOLIO_DATA.availability}
-                            </span>
-                        </div>
+                        <a href="/resume.pdf" target="_blank" rel="noreferrer">
+                            <Button
+                                size="lg"
+                                className="bg-transparent border border-border text-foreground hover:bg-foreground/5 rounded-sm font-mono font-medium tracking-widest text-xs px-6 py-4 flex items-center gap-2 transition-all duration-300"
+                            >
+                                Resume
+                            </Button>
+                        </a>
+                    </div>
+                    
+                    {/* Availability Indicator Moved Below */}
+                    <div className="hero-fade mt-6 flex items-center gap-3 px-4 py-2 bg-muted/10 border border-border rounded-full inline-flex">
+                        <span className="relative flex h-2.5 w-2.5">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                        </span>
+                        <span className="font-mono text-[10px] text-muted uppercase tracking-wider font-semibold">
+                            {PORTFOLIO_DATA.availability}
+                        </span>
                     </div>
 
                     {/* Social Icons */}

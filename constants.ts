@@ -21,7 +21,21 @@ export const PROJECTS: Project[] = [
         githubLink: "https://github.com/SATISH-JALAN/Weft",
         image: "/Weft.png",
         year: "Jan 2026",
-        category: "personal"
+        category: "personal",
+        caseStudy: {
+            problemStatement: "The Stellar and Soroban ecosystem lacked a reliable, dev-friendly way to listen to on-chain events in real-time. Developers had to build their own polling infrastructure, leading to duplicated effort, high node request costs, and delayed data ingestion.",
+            systemArchitecture: "Weft uses a robust event ingestion pipeline. A rust-based listener ingests raw ledgers from Stellar Horizon/RPC nodes. These events are processed, decoded, and pushed to a Redis message broker (BullMQ). Our Node.js workers then route these to appropriate channels (WebSockets/Webhooks) for client consumption.",
+            techDecisions: [
+                "Utilized Redis & BullMQ for reliable, scalable queuing of high-throughput blockchain events.",
+                "Chose PostgreSQL via Neon for serverless, autoscaling storage of event history and API keys.",
+                "Implemented WebSockets (Socket.io) for real-time frontend delivery to keep dashboards instantly updated."
+            ],
+            engineeringChallenges: [
+                "Handling Soroban's complex XDR decoding reliably without dropping frames during high transaction volume.",
+                "Ensuring exactly-once delivery semantics for webhook consumers to prevent double-spending in client applications.",
+                "Managing WebSocket connection limits and memory leaks on the Node.js server under heavy load."
+            ]
+        }
     },
     {
         id: 2,
@@ -33,7 +47,21 @@ export const PROJECTS: Project[] = [
         githubLink: "https://github.com/Mrinmoy-programmer07/Surge",
         image: "/surge.png",
         year: "Nov 2025",
-        category: "personal"
+        category: "personal",
+        caseStudy: {
+            problemStatement: "Traditional Web3 gaming often suffers from high friction, requiring users to sign multiple transactions and wait for confirmations before playing, disrupting the fast-paced competitive gaming experience.",
+            systemArchitecture: "Surge utilizes a stateless matching engine off-chain (powered by Socket.io) combined with on-chain Ethereum escrow contracts. Players lock funds before the match in a unified transaction, allowing the actual gameplay to happen in real-time off-chain with absolute finality settled on-chain post-match.",
+            techDecisions: [
+                "Used Ethers.js v6 and Wagmi for seamless wallet connection and transaction lifecycle UI.",
+                "Implemented Socket.io for low-latency matchmaking and real-time game state synchronization.",
+                "Deployed on fast EVM L2s to minimize gas costs for the pay-before-queue mechanic."
+            ],
+            engineeringChallenges: [
+                "Preventing race conditions where two players match off-chain but one transaction drops on-chain.",
+                "Designing a secure, tamper-proof state-channel approach for off-chain gameplay resolution.",
+                "Optimizing the smart contract to handle the 75/25 auto-routing of rewards efficiently and safely."
+            ]
+        }
     },
     {
         id: 3,
@@ -45,7 +73,21 @@ export const PROJECTS: Project[] = [
         githubLink: "https://github.com/SATISH-JALAN/Midnight",
         image: "/midnight.png",
         year: "Dec 2025",
-        category: "personal"
+        category: "personal",
+        caseStudy: {
+            problemStatement: "Web3 social platforms focus heavily on permanent ledgers, resulting in 'heavy' social graphs where every interaction is stored forever. There was no protocol exploring verifiable, ephemeral moments on-chain.",
+            systemArchitecture: "A hybrid architecture where the NFT token (ERC-721) is permanently minted on-chain, but the metadata and IPFS audio file are intentionally unpinned and deleted from the pinning service and cache after exactly 24 hours.",
+            techDecisions: [
+                "Used Redis to queue and manage the precise 24-hour Time-To-Live (TTL) lifecycle for IPFS unpinning.",
+                "Integrated Gemini API for real-time transcription and semantic tagging of the audio before it disappears.",
+                "Leveraged Socket.io for live broadcasting to active listeners before the audio is finalized and minted."
+            ],
+            engineeringChallenges: [
+                "Guaranteeing deletion of IPFS content in a decentralized storage network inherently built for permanence.",
+                "Handling live audio streaming chunking and reliable upload formatting directly from web browsers.",
+                "Building a robust cron queue in a serverless environment to trigger the smart contract interactions and IPFS unpinning reliably."
+            ]
+        }
     },
     {
         id: 4,
@@ -57,7 +99,21 @@ export const PROJECTS: Project[] = [
         githubLink: "https://github.com/SATISH-JALAN/web3wise-v1",
         image: "/web3wise.png",
         year: "June 2025",
-        category: "personal"
+        category: "personal",
+        caseStudy: {
+            problemStatement: "New entrants to Web3 struggle with overwhelming, fragmented tooling and complex onboarding processes, making it difficult to launch tokens, mint NFTs, or interact with DeFi protocols safely.",
+            systemArchitecture: "A modular, client-side heavy React application that abstracts complex Ethers.js and Web3Modal interactions behind intuitive, wizard-like interfaces. It acts as a friendly, visual abstraction layer over standard RPC nodes.",
+            techDecisions: [
+                "Adopted React for optimized component reuse while keeping blockchain tools purely client-rendered to prevent hydration mismatches.",
+                "Used Web3Modal for maximum wallet compatibility out of the box, drastically reducing connection drop-off.",
+                "Implemented Framer Motion to provide reassuring micro-interactions and loading states during high-latency blockchain reads/writes."
+            ],
+            engineeringChallenges: [
+                "Managing complex asynchronous states during wallet connection, network switching, and transaction signing.",
+                "Handling RPC rate limits gracefully when querying multiple on-chain data points simultaneously.",
+                "Designing a UI token standard (ERC20) generator that parses form inputs into safe, deployable bytecode dynamically."
+            ]
+        }
     },
     {
         id: 5,
@@ -69,7 +125,21 @@ export const PROJECTS: Project[] = [
         githubLink: "https://github.com/SATISH-JALAN/Circlo-v1",
         image: "/Circlo.png",
         year: "Aug 2025",
-        category: "personal"
+        category: "personal",
+        caseStudy: {
+            problemStatement: "The modern sharing economy lacks localized, trust-based platforms for peer-to-peer everyday item rentals, leading to massive overconsumption and hoarding of rarely used household goods.",
+            systemArchitecture: "A Next.js SSR application powered seamlessly by Firebase. Firestore acts as the real-time NoSQL database for item listings and user profiles, while Firebase Auth manages secure sign-ins. Cloud Functions handle complex backend logic like secure payments and booking conflict resolution.",
+            techDecisions: [
+                "Chose Firebase/Firestore to rapid-prototype the real-time availability sync and peer-to-peer chat features.",
+                "Used Tailwind CSS to build a clean, minimalist marketplace UI that feels premium and trustworthy.",
+                "Adopted strict TypeScript models (Zod validation) to maintain data schema integrity across the flexible NoSQL database."
+            ],
+            engineeringChallenges: [
+                "Designing a robust data schema in NoSQL to handle complex date-range overlap queries for booking availability.",
+                "Implementing accurate geohashing to allow users to efficiently search for items within specific proximity radii.",
+                "Building a fair, scalable, and sybil-resistant review and trust-scoring system for peer-to-peer interactions."
+            ]
+        }
     },
     {
         id: 6,
@@ -81,7 +151,21 @@ export const PROJECTS: Project[] = [
         githubLink: "https://github.com/SATISH-JALAN/Aperture-Alchemist",
         image: "/aperture.png",
         year: "Nov 2025",
-        category: "client"
+        category: "client",
+        caseStudy: {
+            problemStatement: "A high-end visual artist needed a digital presence that perfectly matched the premium quality of their physical work. Traditional templates were too clunky, heavily dropping frames, and failing to load high-res media efficiently.",
+            systemArchitecture: "A heavily optimized Next.js App Router application utilizing aggressive static site generation (SSG) and localized caching. Media delivery is strictly managed via a global CDN with adaptive bitrates, while the UI layer relies on hardware-accelerated CSS transforms.",
+            techDecisions: [
+                "Utilized Next.js Image Optimization and custom loaders to serve next-gen formats (WebP/AVIF) dynamically based on device support.",
+                "Chose Framer Motion to orchestrate complex, scroll-linked timeline animations (GSAP-style) without dropping main-thread performance.",
+                "Implemented Radix UI (via ShadCN) for highly accessible, unstyled primitives to maintain a bespoke design system."
+            ],
+            engineeringChallenges: [
+                "Achieving a constant 60fps framerate during heavy scroll animations while simultaneously loading massive 4K video background assets.",
+                "Implementing a seamless client-side page transition system in the Next.js App Router paradigm to simulate a single-page app feel.",
+                "Building a custom masonry grid algorithm that dynamically balances visual weight instead of just rigidly placing images."
+            ]
+        }
     }
 ];
 

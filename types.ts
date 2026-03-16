@@ -2,9 +2,8 @@
 export interface CaseStudy {
     problemStatement: string;
     systemArchitecture: string;
-    techDecisions: string;
-    engineeringChallenges: string;
-    outcome: string;
+    techDecisions?: string[];
+    engineeringChallenges?: string[];
 }
 
 export interface Project {
