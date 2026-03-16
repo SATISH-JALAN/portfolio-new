@@ -1,4 +1,12 @@
 
+export interface CaseStudy {
+    problemStatement: string;
+    systemArchitecture: string;
+    techDecisions: string;
+    engineeringChallenges: string;
+    outcome: string;
+}
+
 export interface Project {
     id: number;
     title: string;
@@ -10,6 +18,7 @@ export interface Project {
     image: string;
     year: string;
     category: 'personal' | 'client';
+    caseStudy?: CaseStudy;
 }
 
 export interface Experience {
@@ -25,6 +34,11 @@ export interface SocialLink {
     platform: string;
     url: string;
     icon: string;
+}
+
+export interface SkillCategory {
+    title: string;
+    skills: Skill[];
 }
 
 export interface Skill {

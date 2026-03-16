@@ -128,19 +128,57 @@ export const EXPERIENCE: Experience[] = [
     }
 ];
 
-export const SKILLS: Skill[] = [
-    { name: "JavaScript", description: "Core language proficiency." },
-    { name: "TypeScript", description: "Type-safe development." },
-    { name: "React / Next.js", description: "Component-based UI architecture." },
-    { name: "Node.js", description: "Backend runtime environment." },
-    { name: "Express.js", description: "Backend runtime environment." },
-    { name: "PostgreSQL", description: "Relational database management." },
-    { name: "MongoDB", description: "NoSQL database management." },
-    { name: "Solidity", description: "Smart contract development." },
-    { name: "Rust", description: "System programming." },
-    { name: "Websocket", description: "Real-time communication." },
-    { name: "Docker", description: "Containerization." },
-    { name: "GSAP", description: "High-performance animations." }
+export const SKILLS: { title: string; items: Skill[] }[] = [
+    {
+        title: "Frontend Ecosystem",
+        items: [
+            { name: "JavaScript", description: "Core language proficiency." },
+            { name: "TypeScript", description: "Type-safe development." },
+            { name: "React", description: "Component-based UI architecture." },
+            { name: "Next.js", description: "React framework for production." },
+            { name: "Tailwind CSS", description: "Utility-first styling." },
+            { name: "GSAP", description: "High-performance animations." },
+            { name: "Framer Motion", description: "Declarative animations for React." }
+        ]
+    },
+    {
+        title: "Backend & APIs",
+        items: [
+            { name: "Node.js", description: "Backend runtime environment." },
+            { name: "Express.js", description: "Web framework for Node.js." },
+            { name: "RESTful APIs", description: "API design and integration." },
+            { name: "GraphQL", description: "Data query and manipulation." }
+        ]
+    },
+    {
+        title: "Databases & Data Systems",
+        items: [
+            { name: "PostgreSQL", description: "Relational database management." },
+            { name: "MongoDB", description: "NoSQL database management." },
+            { name: "Redis", description: "In-memory data structure store." },
+            { name: "Prisma", description: "Next-generation ORM." }
+        ]
+    },
+    {
+        title: "DevOps & Infrastructure",
+        items: [
+            { name: "Docker", description: "Containerization." },
+            { name: "Git", description: "Version control system." },
+            { name: "Linux", description: "Operating system proficiency." },
+            { name: "Vercel / AWS", description: "Cloud deployment and hosting." }
+            
+        ]
+    },
+    {
+        title: "Web3 & Specialized Domains",
+        items: [
+            { name: "Solidity", description: "Smart contract development." },
+            { name: "Ethers.js / Viem", description: "Ethereum interaction libraries." },
+            { name: "Hardhat", description: "Ethereum development environment." },
+            { name: "Rust", description: "System programming." },
+            { name: "Websocket", description: "Real-time communication." }
+        ]
+    }
 ];
 
 export const EDUCATION: Education[] = [

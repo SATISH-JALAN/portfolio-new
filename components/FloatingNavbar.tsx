@@ -5,8 +5,8 @@ import { Magnetic } from './ui/Magnetic';
 
 const navItems = [
     { id: 'hero', label: 'Home', icon: Home },
-    { id: 'about', label: 'Profile', icon: User },
     { id: 'work', label: 'Projects', icon: Briefcase },
+    { id: 'about', label: 'Skills & Profile', icon: User },
     { id: 'contact', label: 'Contact', icon: Mail },
 ];
 

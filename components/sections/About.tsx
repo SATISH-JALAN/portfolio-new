@@ -194,7 +194,7 @@ export const About: React.FC = () => {
 
                         {/* Technologies */}
                         {/* Technologies */}
-                        <div className="w-full max-w-6xl mx-auto tech-grid grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-center">
+                        <div className="w-full max-w-6xl mx-auto tech-grid grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-start">
                             {/* Header Column */}
                             <div className="text-left">
                                 <span className="font-mono text-xs text-muted/60 uppercase tracking-widest mb-6 block">04 / Tools</span>
@@ -203,33 +203,40 @@ export const About: React.FC = () => {
                                 </h2>
                             </div>
 
-                            {/* Content Column */}
-                            <div className="grid grid-cols-2 md:grid-cols-2 gap-4 pt-2 lg:pt-0">
-                                {SKILLS.map((skill, i) => {
-                                    const { iconClass, FallbackIcon } = getTechIconInfo(skill.name);
+                            {/* Content Column - Category Groups */}
+                            <div className="space-y-12 pt-2 lg:pt-0">
+                                {SKILLS.map((category, catIndex) => (
+                                    <div key={catIndex} className="space-y-6">
+                                        <h3 className="text-xl font-display text-muted border-b border-border pb-2">{category.title}</h3>
+                                        <div className="grid grid-cols-2 gap-4">
+                                            {category.items.map((skill, i) => {
+                                                const { iconClass, FallbackIcon } = getTechIconInfo(skill.name);
 
-                                    return (
-                                        <div key={i} className="tech-item group relative p-5 border border-border bg-foreground/5 hover:bg-foreground hover:text-background transition-all duration-300 rounded-sm">
-                                            {/* Icon Header */}
-                                            <div className="mb-4 text-3xl text-foreground group-hover:text-background transition-colors duration-300">
-                                                {iconClass ? (
-                                                    <i className={`${iconClass}`} />
-                                                ) : (
-                                                    <FallbackIcon size={32} strokeWidth={1.5} />
-                                                )}
-                                            </div>
+                                                return (
+                                                    <div key={i} className="tech-item group relative p-5 border border-border bg-foreground/5 hover:bg-foreground hover:text-background transition-all duration-300 rounded-sm">
+                                                        {/* Icon Header */}
+                                                        <div className="mb-4 text-3xl text-foreground group-hover:text-background transition-colors duration-300">
+                                                            {iconClass ? (
+                                                                <i className={`${iconClass}`} />
+                                                            ) : (
+                                                                <FallbackIcon size={32} strokeWidth={1.5} />
+                                                            )}
+                                                        </div>
 
-                                            <div className="font-mono text-sm text-foreground group-hover:text-background mb-2 transition-colors font-bold">{skill.name}</div>
+                                                        <div className="font-mono text-sm text-foreground group-hover:text-background mb-2 transition-colors font-bold">{skill.name}</div>
 
-                                            <div className="text-[10px] text-muted group-hover:text-background/70 transition-colors leading-tight">
-                                                {skill.description}
-                                            </div>
+                                                        <div className="text-[10px] text-muted group-hover:text-background/70 transition-colors leading-tight">
+                                                            {skill.description}
+                                                        </div>
 
-                                            {/* Decorative Corner */}
-                                            <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-border group-hover:border-background/50 transition-colors opacity-0 group-hover:opacity-100"></div>
+                                                        {/* Decorative Corner */}
+                                                        <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-border group-hover:border-background/50 transition-colors opacity-0 group-hover:opacity-100"></div>
+                                                    </div>
+                                                );
+                                            })}
                                         </div>
-                                    );
-                                })}
+                                    </div>
+                                ))}
                             </div>
                         </div>
 
