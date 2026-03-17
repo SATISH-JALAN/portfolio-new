@@ -13,6 +13,7 @@ import { TextScramble } from './components/ui/TextScramble';
 import { TimeWidget } from './components/ui/TimeWidget';
 import { PORTFOLIO_DATA } from './constants';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const AppContent: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -28,10 +29,19 @@ const AppContent: React.FC = () => {
     }
   }, [loading, isProjectModalOpen]);
 
-  // Initial Loading Scroll Lock
+  // Initial Loading Scroll Lock & GSAP Sync
   useEffect(() => {
     if (loading) {
       window.scrollTo(0, 0);
+    } else {
+      // When loading finishes, the DOM expands from h-screen to full height.
+      // We MUST instruct GSAP to recalculate all its trigger positions globally.
+      // We use a slight delay to ensure the browser has painted the new layout.
+      setTimeout(() => {
+        gsap.registerPlugin(ScrollTrigger);
+        ScrollTrigger.refresh();
+      }, 100);
+      setTimeout(() => ScrollTrigger.refresh(), 500); // Failsafe for slower mobile paints
     }
   }, [loading]);
 

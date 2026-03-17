@@ -27,7 +27,7 @@ export const About: React.FC = () => {
                         ease: "power3.out",
                         scrollTrigger: {
                             trigger: trigger,
-                            start: "top bottom-=40", // Trigger slightly before entering
+                            start: "top 95%", // Permissive trigger
                             once: true // Play once to avoid mobile resize bugs
                         }
                     }
@@ -108,7 +108,7 @@ export const About: React.FC = () => {
                     </div>
 
                     {/* Contributions Graph */}
-                    <div className="w-full max-w-6xl mx-auto contributions-wrapper opacity-0 grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-start">
+                    <div className="w-full max-w-6xl mx-auto contributions-wrapper grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-start">
                         {/* Header Column */}
                         <div className="text-left lg:sticky lg:top-32">
                             <span className="font-mono text-xs text-muted/60 uppercase tracking-widest mb-6 block">02 / Code</span>
