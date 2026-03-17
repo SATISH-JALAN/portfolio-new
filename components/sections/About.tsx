@@ -27,8 +27,8 @@ export const About: React.FC = () => {
                         ease: "power3.out",
                         scrollTrigger: {
                             trigger: trigger,
-                            start: "top 90%",
-                            toggleActions: "play none none reverse"
+                            start: "top bottom-=40", // Trigger slightly before entering
+                            once: true // Play once to avoid mobile resize bugs
                         }
                     }
                 );

@@ -28,8 +28,8 @@ export const YearReview: React.FC<YearReviewProps> = ({ onNavigate }) => {
                         ease: "power3.out",
                         scrollTrigger: {
                             trigger: trigger,
-                            start: "top 90%",
-                            toggleActions: "play none none reverse"
+                            start: "top bottom-=40", // Trigger exactly before it enters
+                            once: true // Only play once to prevent mobile resize hiding
                         }
                     }
                 );
