@@ -70,7 +70,7 @@ const AppContent: React.FC = () => {
     <>
       <Helmet>
         <title>Satish Jalan | Software Engineer</title>
-        <meta name="description" content="Satish Jalan - Full Stack Developer specializing in modern web technologies, scalable architectures, and seamless user experiences." />
+        <meta name="description" content="Full Stack and Web3 developer building fast, scalable, and user-centric digital products. MERN stack, TypeScript, Solidity. Based in Kolkata. Available for freelance." />
         <meta name="keywords" content="Satish Jalan, Software Engineer, Full Stack Developer, React, Next.js, Web3, Portfolio" />
         <link rel="canonical" href="https://satishjalan.me/" />
         
@@ -78,14 +78,14 @@ const AppContent: React.FC = () => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://satishjalan.me/" />
         <meta property="og:title" content="Satish Jalan | Software Engineer" />
-        <meta property="og:description" content="Satish Jalan - Full Stack Developer specializing in modern web technologies, scalable architectures, and seamless user experiences." />
+        <meta property="og:description" content="Full Stack and Web3 developer building fast, scalable, and user-centric digital products. MERN stack, TypeScript, Solidity. Based in Kolkata. Available for freelance." />
         <meta property="og:image" content="https://satishjalan.me/satish.jpeg" />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://satishjalan.me/" />
         <meta property="twitter:title" content="Satish Jalan | Software Engineer" />
-        <meta property="twitter:description" content="Satish Jalan - Full Stack Developer specializing in modern web technologies, scalable architectures, and seamless user experiences." />
+        <meta property="twitter:description" content="Full Stack and Web3 developer building fast, scalable, and user-centric digital products. MERN stack, TypeScript, Solidity. Based in Kolkata. Available for freelance." />
         <meta property="twitter:image" content="https://satishjalan.me/satish.jpeg" />
         <meta name="google-site-verification" content="7D5Nlf0XaLx3xGolLIweQJcrfwFOnCi_lrC9XFIc5sY" />
       </Helmet>
