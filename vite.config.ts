@@ -10,13 +10,14 @@ export default defineConfig(({ mode }) => {
         port: 3000,
         host: '0.0.0.0',
       },
-      build: {
-        target: 'es2018'
-      },
       plugins: [
         react(),
         Sitemap({ hostname: 'https://satishjalan.me', dynamicRoutes: ['/'] })
       ],
+      ssgOptions: {
+        script: 'async',
+        entry: 'index.tsx',
+      },
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
         'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
