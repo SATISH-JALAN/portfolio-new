@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => {
       },
       plugins: [
         react(),
-        Sitemap({ hostname: 'https://satishjalan.me', dynamicRoutes: ['/'] })
+        Sitemap({ hostname: 'https://www.satishjalan.me' })
       ],
       ssgOptions: {
         script: 'async',
