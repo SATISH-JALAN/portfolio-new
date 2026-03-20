@@ -65,27 +65,28 @@ export const About: React.FC = () => {
                         </div>
 
                         {/* Content Column - Category Groups */}
-                        <div className="space-y-12 pt-2 lg:pt-0">
+                        <div className="space-y-10 pt-2 lg:pt-0">
                             {SKILLS.map((category, catIndex) => (
-                                <div key={catIndex} className="space-y-6">
-                                    <div className="flex items-center gap-4 mb-2">
-                                        <h3 className="text-sm font-mono text-muted uppercase tracking-widest whitespace-nowrap">{category.title}</h3>
-                                        <div className="h-px w-full bg-border/50"></div>
-                                    </div>
+                                <div key={catIndex} className="relative pt-6 first:pt-4">
+                                    <h3 className="absolute top-0 left-0 text-[10px] sm:text-xs font-mono text-muted/60 uppercase tracking-widest">{category.title}</h3>
                                     <div className="flex flex-wrap gap-2.5">
                                         {category.items.map((skill, i) => {
                                             const iconInfo = getTechIconInfo(skill.name);
                                             const iconClass = iconInfo?.iconClass;
                                             const FallbackIcon = iconInfo?.FallbackIcon;
+                                            const isTier1 = skill.tier !== 2;
 
                                             return (
                                                 <div 
                                                     key={i} 
-                                                    className="tech-item group flex items-center gap-2.5 px-3 py-1.5 border border-border/40 bg-foreground/[0.02] hover:bg-foreground/[0.08] hover:border-foreground/20 transition-all duration-300 rounded-lg cursor-default"
+                                                    className={`tech-item group flex items-center gap-2.5 px-3 py-1.5 transition-all duration-300 rounded-lg cursor-default 
+                                                        ${isTier1 
+                                                            ? 'opacity-100 border border-border bg-foreground/[0.06] font-medium hover:bg-foreground/10 hover:border-foreground/40' 
+                                                            : 'opacity-60 border border-border/40 bg-transparent font-normal hover:opacity-100 hover:bg-foreground/5 hover:border-border/80'}`}
                                                     title={skill.description}
                                                 >
                                                     {/* Icon Header */}
-                                                    <div className="text-base text-muted group-hover:text-foreground transition-colors duration-300 flex items-center justify-center">
+                                                    <div className={`text-base flex items-center justify-center transition-colors duration-300 ${isTier1 ? 'text-foreground/80 group-hover:text-foreground' : 'text-muted group-hover:text-foreground/80'}`}>
                                                         {iconClass ? (
                                                             <i className={`${iconClass}`} />
                                                         ) : FallbackIcon ? (
@@ -95,7 +96,7 @@ export const About: React.FC = () => {
                                                         )}
                                                     </div>
 
-                                                    <span className="font-mono text-xs font-medium tracking-wide text-foreground/80 group-hover:text-foreground transition-colors">
+                                                    <span className={`font-mono text-xs tracking-wide transition-colors ${isTier1 ? 'text-foreground group-hover:text-foreground' : 'text-muted group-hover:text-foreground/90'}`}>
                                                         {skill.name}
                                                     </span>
                                                 </div>

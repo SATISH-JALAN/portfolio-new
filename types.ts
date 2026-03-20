@@ -43,6 +43,7 @@ export interface SkillCategory {
 export interface Skill {
     name: string;
     description: string;
+    tier?: 1 | 2;
 }
 
 export interface Education {

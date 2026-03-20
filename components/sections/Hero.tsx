@@ -70,37 +70,59 @@ export const Hero: React.FC<HeroProps> = ({ loading = false }) => {
     };
 
     return (
-        <section ref={containerRef} id="hero" className="min-h-screen flex items-center relative px-4 md:px-8 lg:px-16 overflow-hidden">
+        <section ref={containerRef} id="hero" className="min-h-screen flex items-center justify-center relative px-4 md:px-8 lg:px-16 overflow-hidden">
+            {/* Dot Grid Background */}
+            <div 
+                className="absolute inset-0 z-0 pointer-events-none"
+                style={{
+                    backgroundImage: "radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px)",
+                    backgroundSize: "32px 32px"
+                }}
+            />
 
             {/* Main Layout - Side by Side */}
-            <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center py-20">
+            <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center py-10 relative z-10 pt-16 md:pt-10">
 
-                {/* Left - Photo */}
-                <div className="order-2 lg:order-1 flex justify-center lg:justify-start">
+                {/* Left - Photo (Stacked Top on Mobile) */}
+                <div className="order-1 lg:order-1 flex justify-center lg:justify-start">
                     <div
                         ref={imageContainerRef}
-                        className="relative w-[300px] md:w-[380px] lg:w-[420px] aspect-[3/4] group"
+                        className="relative w-[220px] sm:w-[280px] md:w-[380px] lg:w-[420px] aspect-[3/4] group"
                         onMouseMove={handleImageMouseMove}
                         onMouseLeave={handleImageMouseLeave}
                     >
-                        {/* Main Image */}
-                        <div className="hero-image-wrapper w-full h-full overflow-hidden bg-neutral-900">
+                        {/* Faint Radial Glow Behind Photo */}
+                        <div 
+                            className="absolute inset-0 -m-32 z-0 pointer-events-none" 
+                            style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%)' }}
+                        />
+
+                        {/* Drop shadow wrapper to evade GSAP clipPath block */}
+                        <div className="absolute inset-0 z-0" style={{ boxShadow: '0 20px 80px rgba(0,0,0,0.9)' }} />
+
+                        {/* Main Image Wrapper */}
+                        <div className="hero-image-wrapper w-full h-full overflow-hidden bg-neutral-900 relative z-10">
                             <img
                                 ref={imageRef}
                                 src="/satish.jpeg"
                                 alt="Satish Jalan"
                                 className="w-full h-full object-cover will-change-transform"
                             />
+                            {/* SVG Noise Overlay */}
+                            <div className="absolute inset-0 pointer-events-none opacity-40 z-20 mix-blend-overlay">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                                    <filter id="noiseFilter">
+                                        <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" stitchTiles="stitch" />
+                                    </filter>
+                                    <rect width="100%" height="100%" filter="url(#noiseFilter)" />
+                                </svg>
+                            </div>
                         </div>
-
-                        {/* Subtle corner accents */}
-                        <div className="absolute -top-3 -left-3 w-12 h-12 border-l-2 border-t-2 border-foreground/20" />
-                        <div className="absolute -bottom-3 -right-3 w-12 h-12 border-r-2 border-b-2 border-foreground/20" />
                     </div>
                 </div>
 
                 {/* Right - Content */}
-                <div className="order-1 lg:order-2 flex flex-col items-center lg:items-start text-center lg:text-left">
+                <div className="order-2 lg:order-2 flex flex-col items-center lg:items-start text-center lg:text-left">
 
                     {/* Greeting */}
                     <p className="hero-fade text-muted text-lg md:text-xl tracking-widest uppercase mb-4 font-mono">
@@ -108,8 +130,8 @@ export const Hero: React.FC<HeroProps> = ({ loading = false }) => {
                     </p>
 
                     {/* Name - Signature Style */}
-                    <h1 className="mb-8 flex flex-col">
-                        <span className="font-signature text-[14vw] md:text-[10vw] lg:text-[6vw] leading-[1.1] tracking-normal text-foreground overflow-visible relative">
+                    <h1 className="mb-4 md:mb-8 flex flex-col items-center lg:items-start text-center">
+                        <span className="font-signature text-[clamp(60px,16vw,120px)] md:text-[10vw] lg:text-[6vw] leading-[1.1] tracking-normal text-foreground overflow-visible relative">
                             <span className="inline-block signature-text">Satish Jalan</span>
                         </span>
                     </h1>
@@ -120,14 +142,18 @@ export const Hero: React.FC<HeroProps> = ({ loading = false }) => {
                     </p>
 
                     {/* Short Bio */}
-                    <p className="hero-fade text-muted text-sm md:text-base leading-relaxed max-w-lg mb-8">
-                        {PORTFOLIO_DATA.bio} 
-                        <br/><br/>
-                        Specializing in modern web technologies, building scalable architectures, and crafting intuitive user experiences from the ground up.
-                    </p>
+                    <div className="hero-fade mb-8 w-full max-w-lg">
+                        <p className="text-muted text-sm md:text-base leading-relaxed">
+                            {PORTFOLIO_DATA.bio} 
+                            <br/><br/>
+                            Specializing in modern web technologies, building scalable architectures, and crafting intuitive user experiences from the ground up.
+                        </p>
+                        {/* Typographic Divider */}
+                        <div className="w-full h-px bg-white/20 mt-8"></div>
+                    </div>
 
                     {/* CTA & Status Row */}
-                    <div className="hero-fade flex flex-wrap items-center gap-4">
+                    <div className="hero-fade flex flex-row flex-wrap justify-center lg:justify-start items-center gap-3 w-full">
                         <Button
                             onClick={scrollToWork}
                             size="lg"
@@ -156,10 +182,10 @@ export const Hero: React.FC<HeroProps> = ({ loading = false }) => {
                     </div>
                     
                     {/* Availability Indicator Moved Below */}
-                    <div className="hero-fade mt-6 flex items-center gap-3 px-4 py-2 bg-muted/10 border border-border rounded-full inline-flex">
+                    <div className="hero-fade mt-6 flex justify-center lg:justify-start items-center gap-3 px-4 py-2 bg-muted/10 border border-border rounded-full inline-flex mx-auto lg:mx-0">
                         <span className="relative flex h-2.5 w-2.5">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4ADE80] opacity-80"></span>
+                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#4ADE80] opacity-80"></span>
                         </span>
                         <span className="font-mono text-[10px] text-muted uppercase tracking-wider font-semibold">
                             {PORTFOLIO_DATA.availability}
@@ -167,7 +193,7 @@ export const Hero: React.FC<HeroProps> = ({ loading = false }) => {
                     </div>
 
                     {/* Social Icons */}
-                    <div className="hero-fade flex items-center gap-4 mt-8">
+                    <div className="hero-fade flex flex-wrap justify-center lg:justify-start items-center gap-4 mt-8 w-full">
                         {SOCIALS.filter(s => ['GitHub', 'LinkedIn', 'Twitter'].includes(s.platform)).map((social) => {
                             const Icon = social.platform === 'GitHub' ? Github : social.platform === 'Twitter' ? Twitter : Linkedin;
                             return (

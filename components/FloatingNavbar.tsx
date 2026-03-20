@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Home, User, Briefcase, Mail, History } from 'lucide-react';
+import { Home, User, Briefcase, Mail, History, PenTool } from 'lucide-react';
 import gsap from 'gsap';
 import { Magnetic } from './ui/Magnetic';
 
@@ -8,6 +8,7 @@ const navItems = [
     { id: 'work', label: 'Projects', icon: Briefcase },
     { id: 'about', label: 'Skills & Activity', icon: User },
     { id: 'experience', label: 'Experience', icon: History },
+    { id: 'blog', label: 'Writing', icon: PenTool },
     { id: 'contact', label: 'Contact', icon: Mail },
 ];
 
@@ -81,7 +82,7 @@ export const FloatingNavbar: React.FC<{ hidden?: boolean }> = ({ hidden = false 
     return (
         <div
             ref={navRef}
-            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-auto"
+            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-auto pb-[env(safe-area-inset-bottom)]"
         >
             {/* Dock Container */}
             <div className="flex items-center gap-2 p-2 rounded-2xl border border-zinc-800/60 bg-black/40 backdrop-blur-xl shadow-2xl ring-1 ring-white/5 transition-all duration-300 hover:bg-black/60 hover:border-zinc-700/60 hover:scale-105">
@@ -115,9 +116,9 @@ export const FloatingNavbar: React.FC<{ hidden?: boolean }> = ({ hidden = false 
                                     className={`transition-transform duration-300 ${isHovered ? 'scale-110' : 'scale-100'}`}
                                 />
 
-                                {/* Active Indicator (Dot) */}
+                                {/* Active Indicator (Dot Underline) */}
                                 {isActive && (
-                                    <span className="absolute bottom-1 w-1 h-1 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)] animate-pulse" />
+                                    <span className="absolute bottom-1 w-3 h-[2px] rounded-full bg-[#E8E8F0]" />
                                 )}
 
                                 {/* Shadcn-style Tooltip */}

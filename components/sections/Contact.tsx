@@ -115,7 +115,7 @@ export const Contact: React.FC = () => {
 
                     {/* Left Column - Big Text */}
                     <div className="md:w-1/2">
-                        <h2 className="text-[12vw] md:text-[8vw] leading-[0.8] font-display font-bold text-foreground mb-8 tracking-tighter">
+                        <h2 className="text-[clamp(48px,12vw,120px)] leading-[0.8] font-display font-bold text-foreground mb-8 tracking-tighter">
                             LET'S<br />TALK
                         </h2>
 

@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Hero } from './components/sections/Hero';
 import { About } from './components/sections/About';
 import { Projects } from './components/sections/Projects';
 import { YearReview } from './components/sections/YearReview';
+import { BlogPreview } from './components/sections/BlogPreview';
 import { Contact } from './components/sections/Contact';
 import { CursorTrail } from './components/CursorTrail';
 import { ScrollToTop } from './components/ScrollToTop';
@@ -66,6 +68,27 @@ const AppContent: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Satish Jalan | Software Engineer</title>
+        <meta name="description" content="Satish Jalan - Full Stack Developer specializing in modern web technologies, scalable architectures, and seamless user experiences." />
+        <meta name="keywords" content="Satish Jalan, Software Engineer, Full Stack Developer, React, Next.js, Web3, Portfolio" />
+        <link rel="canonical" href="https://satishjalan.me/" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://satishjalan.me/" />
+        <meta property="og:title" content="Satish Jalan | Software Engineer" />
+        <meta property="og:description" content="Satish Jalan - Full Stack Developer specializing in modern web technologies, scalable architectures, and seamless user experiences." />
+        <meta property="og:image" content="https://satishjalan.me/satish.jpeg" />
+
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://satishjalan.me/" />
+        <meta property="twitter:title" content="Satish Jalan | Software Engineer" />
+        <meta property="twitter:description" content="Satish Jalan - Full Stack Developer specializing in modern web technologies, scalable architectures, and seamless user experiences." />
+        <meta property="twitter:image" content="https://satishjalan.me/satish.jpeg" />
+      </Helmet>
+
       {/* Show Preloader until loading is false */}
       {loading && <Preloader onComplete={() => setLoading(false)} />}
 
@@ -104,6 +127,7 @@ const AppContent: React.FC = () => {
           <Projects onModalOpen={setIsProjectModalOpen} />
           <About />
           <YearReview />
+          <BlogPreview />
           <Contact />
         </main>
       </div>

@@ -216,51 +216,50 @@ export const SKILLS: { title: string; items: Skill[] }[] = [
     {
         title: "Frontend Ecosystem",
         items: [
-            { name: "JavaScript", description: "Core language proficiency." },
-            { name: "TypeScript", description: "Type-safe development." },
-            { name: "React", description: "Component-based UI architecture." },
-            { name: "Next.js", description: "React framework for production." },
-            { name: "Tailwind CSS", description: "Utility-first styling." },
-            { name: "GSAP", description: "High-performance animations." },
-            { name: "Framer Motion", description: "Declarative animations for React." }
+            { name: "JavaScript", description: "Core language proficiency.", tier: 1 },
+            { name: "TypeScript", description: "Type-safe development.", tier: 1 },
+            { name: "React", description: "Component-based UI architecture.", tier: 1 },
+            { name: "Next.js", description: "React framework for production.", tier: 1 },
+            { name: "Tailwind CSS", description: "Utility-first styling.", tier: 1 },
+            { name: "GSAP", description: "High-performance animations.", tier: 2 },
+            { name: "Framer Motion", description: "Declarative animations for React.", tier: 2 }
         ]
     },
     {
         title: "Backend & APIs",
         items: [
-            { name: "Node.js", description: "Backend runtime environment." },
-            { name: "Express.js", description: "Web framework for Node.js." },
-            { name: "RESTful APIs", description: "API design and integration." },
-            { name: "GraphQL", description: "Data query and manipulation." }
+            { name: "Node.js", description: "Backend runtime environment.", tier: 1 },
+            { name: "Express.js", description: "Web framework for Node.js.", tier: 1 },
+            { name: "RESTful APIs", description: "API design and integration.", tier: 1 },
+            { name: "GraphQL", description: "Data query and manipulation.", tier: 2 }
         ]
     },
     {
         title: "Databases & Data Systems",
         items: [
-            { name: "PostgreSQL", description: "Relational database management." },
-            { name: "MongoDB", description: "NoSQL database management." },
-            { name: "Redis", description: "In-memory data structure store." },
-            { name: "Prisma", description: "Next-generation ORM." }
+            { name: "PostgreSQL", description: "Relational database management.", tier: 1 },
+            { name: "MongoDB", description: "NoSQL database management.", tier: 2 },
+            { name: "Redis", description: "In-memory data structure store.", tier: 1 },
+            { name: "Prisma", description: "Next-generation ORM.", tier: 2 }
         ]
     },
     {
         title: "DevOps & Infrastructure",
         items: [
-            { name: "Docker", description: "Containerization." },
-            { name: "Git", description: "Version control system." },
-            { name: "Linux", description: "Operating system proficiency." },
-            { name: "Vercel / AWS", description: "Cloud deployment and hosting." }
-            
+            { name: "Docker", description: "Containerization.", tier: 2 },
+            { name: "Git", description: "Version control system.", tier: 1 },
+            { name: "Linux", description: "Operating system proficiency.", tier: 2 },
+            { name: "Vercel / AWS", description: "Cloud deployment and hosting.", tier: 1 }
         ]
     },
     {
         title: "Web3 & Specialized Domains",
         items: [
-            { name: "Solidity", description: "Smart contract development." },
-            { name: "Ethers.js / Viem", description: "Ethereum interaction libraries." },
-            { name: "Hardhat", description: "Ethereum development environment." },
-            { name: "Rust", description: "System programming." },
-            { name: "Websocket", description: "Real-time communication." }
+            { name: "Solidity", description: "Smart contract development.", tier: 1 },
+            { name: "Ethers.js / Viem", description: "Ethereum interaction libraries.", tier: 1 },
+            { name: "Hardhat", description: "Ethereum development environment.", tier: 2 },
+            { name: "Rust", description: "System programming.", tier: 2 },
+            { name: "Websocket", description: "Real-time communication.", tier: 2 }
         ]
     }
 ];
@@ -309,7 +308,11 @@ export const GOALS_2026 = [
     { id: 15, text: "Become Someone Known for Building Real Things", completed: false },
     { id: 16, text: "Start Content Creation", completed: false },
     { id: 17, text: "Speak at at least one tech event", completed: false },
-    { id: 18, text: "Contribute to a major open-source project", completed: false },
     { id: 19, text: "Develop strong public speaking skills", completed: false },
     { id: 20, text: "Learn startup fundamentals (sales, pitching, storytelling)", completed: false },
 ];
+
+export const BLOG_CONFIG = {
+    hashnodeHost: "thegrain.hashnode.dev",
+    mediumUsername: "@satishjalan9163"
+};
