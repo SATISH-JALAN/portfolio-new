@@ -87,6 +87,7 @@ const AppContent: React.FC = () => {
         <meta property="twitter:title" content="Satish Jalan | Software Engineer" />
         <meta property="twitter:description" content="Satish Jalan - Full Stack Developer specializing in modern web technologies, scalable architectures, and seamless user experiences." />
         <meta property="twitter:image" content="https://satishjalan.me/satish.jpeg" />
+        <meta name="google-site-verification" content="7D5Nlf0XaLx3xGolLIweQJcrfwFOnCi_lrC9XFIc5sY" />
       </Helmet>
 
       {/* Show Preloader until loading is false */}
