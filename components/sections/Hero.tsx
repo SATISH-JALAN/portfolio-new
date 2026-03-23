@@ -124,10 +124,7 @@ export const Hero: React.FC<HeroProps> = ({ loading = false }) => {
                 {/* Right - Content */}
                 <div className="order-2 lg:order-2 flex flex-col items-center lg:items-start text-center lg:text-left">
 
-                    {/* Greeting */}
-                    <p className="hero-fade text-muted text-lg md:text-xl tracking-widest uppercase mb-4 font-mono">
-                        // Software Engineer
-                    </p>
+                    
 
                     {/* Name - Signature Style */}
                     <h1 className="mb-4 md:mb-8 flex flex-col items-center lg:items-start text-center">
@@ -213,13 +210,7 @@ export const Hero: React.FC<HeroProps> = ({ loading = false }) => {
 
                 </div>
             </div>
-
-            {/* Scroll Indicator */}
-            <div className="hero-fade absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-                <span className="text-xs text-muted uppercase tracking-widest">Scroll</span>
-                <ArrowDown className="w-4 h-4 text-muted animate-bounce" />
-            </div>
-
+            
             {/* Subtle vertical line accent */}
             <div className="hidden lg:block absolute left-8 top-1/4 bottom-1/4 w-px bg-gradient-to-b from-transparent via-foreground/10 to-transparent" />
             <div className="hidden lg:block absolute right-8 top-1/4 bottom-1/4 w-px bg-gradient-to-b from-transparent via-foreground/10 to-transparent" />
