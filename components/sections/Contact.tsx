@@ -4,6 +4,10 @@ import { SOCIALS, PORTFOLIO_DATA } from '../../constants';
 import { TextScramble } from '../ui/TextScramble';
 import { Copy, Check, Github, Twitter, Linkedin, LucideIcon, Mail } from 'lucide-react';
 import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 
 // Custom WhatsApp Icon using Bootstrap Icon SVG
@@ -90,6 +94,7 @@ const SocialIcon: React.FC<{ social: typeof SOCIALS[0] }> = ({ social }) => {
                 }
             `}
             aria-label={social.platform}
+            data-cursor="Open"
         >
             <Icon
                 size={24}
@@ -100,6 +105,7 @@ const SocialIcon: React.FC<{ social: typeof SOCIALS[0] }> = ({ social }) => {
 };
 
 export const Contact: React.FC = () => {
+    const footerRef = useRef<HTMLElement>(null);
     const [copied, setCopied] = useState(false);
 
     const handleCopyEmail = () => {
@@ -108,15 +114,33 @@ export const Contact: React.FC = () => {
         setTimeout(() => setCopied(false), 2000);
     };
 
+    useGSAP(() => {
+        // Create a parallax uncover effect by animating the inner content
+        gsap.fromTo(".footer-content", 
+            { yPercent: -15, opacity: 0 },
+            {
+                yPercent: 0,
+                opacity: 1,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: footerRef.current,
+                    start: "top 95%",
+                    end: "top 30%",
+                    scrub: 1,
+                }
+            }
+        );
+    }, { scope: footerRef });
+
     return (
-        <section id="contact" className="py-24 relative bg-background transition-colors duration-500">
-            <div className="container px-4 md:px-6 mx-auto">
+        <section id="contact" ref={footerRef} className="pt-20 pb-8 relative bg-background transition-colors duration-500 overflow-hidden">
+            <div className="container px-4 md:px-6 mx-auto footer-content">
                 <div className="flex flex-col md:flex-row justify-between gap-16 md:gap-24">
 
                     {/* Left Column - Big Text */}
                     <div className="md:w-1/2">
-                        <h2 className="text-[clamp(48px,12vw,120px)] leading-[0.8] font-display font-bold text-foreground mb-8 tracking-tighter">
-                            LET'S<br />TALK
+                        <h2 className="text-[clamp(48px,12vw,120px)] leading-[0.8] font-pixel font-bold text-foreground mb-8 tracking-tighter">
+                            LETS<br />TALK
                         </h2>
 
                         <div className="space-y-8 mt-12">
@@ -137,6 +161,9 @@ export const Contact: React.FC = () => {
                                         </>
                                     )}
                                 </button>
+                                <div className="mt-4 hidden md:block">
+                                    <span className="font-signature text-5xl text-muted/30 rotate-[-5deg] block">{PORTFOLIO_DATA.name.split(" ")[0]}</span>
+                                </div>
                             </div>
 
                             <div>
@@ -173,10 +200,11 @@ export const Contact: React.FC = () => {
                                     w-full bg-foreground text-background 
                                     hover:bg-zinc-200 dark:hover:bg-zinc-300
                                     transition-all duration-500 ease-out
-                                    font-bold uppercase tracking-wider
+                                    font-display font-medium tracking-wide
                                     hover:scale-[1.02] active:scale-[0.98]
                                     hover:shadow-lg
                                 "
+                                data-cursor="Send"
                             >
                                 Send Message
                             </Button>
@@ -185,7 +213,7 @@ export const Contact: React.FC = () => {
 
                 </div>
 
-                <div className="mt-32 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center text-muted font-mono text-xs pb-32">
+                <div className="mt-16 pt-6 border-t border-border flex flex-col md:flex-row justify-between items-center text-muted font-mono text-xs pb-6">
                     <span>© {new Date().getFullYear()} {PORTFOLIO_DATA.name.toUpperCase()}</span>
                     <span>INDIA</span>
                     <span>DESIGNED & ENGINEERED</span>

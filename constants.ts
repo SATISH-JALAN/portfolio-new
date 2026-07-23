@@ -4,7 +4,7 @@ import { Project, Experience, SocialLink, Skill, Education } from './types';
 export const PORTFOLIO_DATA = {
     name: "Satish Jalan",
     role: "Full Stack & Web3 Developer",
-    bio: "I'm a full-stack developer and Web3 builder focused on creating fast, scalable, and user-centric digital products. With strong experience in the MERN stack, TypeScript, and modern frontend systems, I've built everything from production-ready web platforms to blockchain-based applications.",
+    bio: "a Full-Stack & Web3 Developer obsessed with crafting stunning, lightning-fast user experiences. I specialize in React, TypeScript, Tailwind, GSAP & Framer Motion to build smooth, pixel-perfect interfaces, backed by powerful MERN stack and blockchain tech. From real-time Web3 platforms and decentralized apps to elegant full-stack products - I turn ideas into polished, scalable realities. Currently building at Valdyum Labs",
     location: "India",
     email: "satishjalan9163@gmail.com",
     availability: "Available for freelance"
@@ -13,6 +13,56 @@ export const PORTFOLIO_DATA = {
 export const PROJECTS: Project[] = [
     {
         id: 1,
+        title: "Valdyum Labs",
+        description: "Solana-Native Agent Infrastructure — AI agents, made to yield.",
+        longDescription: "Valdyum Labs is a Solana-native AI agent infrastructure designed to empower autonomous agents to optimize yields, execute automated strategy loops, and seamlessly interface with DeFi protocols on Solana.",
+        tech: ["Solana", "Rust", "TypeScript", "Next.js", "AI Agents", "Pyth Network", "Tailwind CSS", "Anchor"],
+        liveLink: "https://www.valdyum.live/",
+        githubLink: "https://github.com/SATISH-JALAN/Valdyum-Labs",
+        image: "/Valdyum.png",
+        year: "Feb 2026",
+        category: "personal",
+        caseStudy: {
+            problemStatement: "Autonomous AI agents on Solana lacked standardized, high-performance infrastructure to manage yield-bearing assets, execute complex smart contract logic, and securely interact with DeFi protocols.",
+            systemArchitecture: "Valdyum combines off-chain AI decision loops with on-chain Solana Rust programs and Pyth oracle integrations, enabling dynamic yield strategies, automated liquidity management, and real-time execution.",
+            techDecisions: [
+                "Leveraged Solana and Anchor framework for high-throughput, low-latency transaction execution.",
+                "Integrated Pyth Network price feeds for real-time risk assessment and automated rebalancing.",
+                "Built a modular TypeScript SDK allowing developers to plug autonomous AI agents into yield strategies seamlessly."
+            ],
+            engineeringChallenges: [
+                "Managing state synchronization between fast off-chain LLM execution loops and on-chain account data.",
+                "Optimizing transaction instruction size limits on Solana while packing complex multi-step strategy operations."
+            ]
+        }
+    },
+    {
+        id: 2,
+        title: "Vayyl",
+        description: "Shielded pools on Stellar / Soroban — Private notes. Public proofs.",
+        longDescription: "Vayyl is a zero-knowledge privacy protocol built on Stellar and Soroban. Shield XLM into a private note, keep an encrypted backup, and settle transactions confidentially through zero-knowledge proofs verified on-chain.",
+        tech: ["Soroban", "Groth16", "Zero-Knowledge Proofs", "Rust", "BN254", "Stellar SDK", "TypeScript", "Next.js", "Tailwind CSS"],
+        liveLink: "https://vayyl.vercel.app/",
+        githubLink: "https://github.com/SATISH-JALAN/Vayyl",
+        image: "/Vayyl.png",
+        year: "Jan 2026",
+        category: "personal",
+        caseStudy: {
+            problemStatement: "Public blockchains lack financial privacy by default. Users needing confidential transactions on Stellar Soroban require cryptographic privacy mechanisms without compromising compliance or verifiability.",
+            systemArchitecture: "Vayyl implements zero-knowledge shielded pools using Groth16 zk-SNARKs and BN254 elliptic curves on Stellar's Soroban smart contract environment. Users convert transparent XLM into encrypted private notes off-chain, generating ZK proofs for on-chain settlement.",
+            techDecisions: [
+                "Utilized Groth16 zero-knowledge proofs for minimal proof size and fast on-chain verification.",
+                "Implemented Soroban native host functions with BN254 curve support for efficient cryptographic verifications.",
+                "Built encrypted client-side note storage with automated state synchronization to prevent double-spending."
+            ],
+            engineeringChallenges: [
+                "Optimizing Groth16 proof generation time in web browsers to maintain a smooth user experience.",
+                "Ensuring nullifier set tracking in Soroban state without running into ledger storage bloat or high fee tariffs."
+            ]
+        }
+    },
+    {
+        id: 3,
         title: "Weft",
         description: "Real-time Event Streaming Infrastructure for Soroban & Stellar",
         longDescription: "Weft is a powerful event streaming platform that transforms raw blockchain data into actionable, enriched business signals. Think of it as The Graph or Alchemy Notify but built specifically for the Stellar network's new smart contract platform, Soroban. It provides a range of services to help users navigate the complex world of Web3. The platform is built with Next.js and TypeScript, and features a modern, user-friendly interface with a focus on accessibility and performance.",
@@ -38,7 +88,7 @@ export const PROJECTS: Project[] = [
         }
     },
     {
-        id: 2,
+        id: 4,
         title: "Surge",
         description: "Decentralized Pay-Before-Queue Gaming Platform with Multichain Support.",
         longDescription: "Surge is a trustless gaming platform where players stake ETH/MNT to compete, with winners taking 75% of the pot while the platform collects 25% as fees. Built with smart contract escrow and real-time Socket.io matchmaking.",
@@ -64,8 +114,8 @@ export const PROJECTS: Project[] = [
         }
     },
     {
-        id: 3,
-        title: "Midnight Radio ",
+        id: 5,
+        title: "Midnight Radio",
         description: "Midnight Radio is a decentralized, ephemeral voice streaming protocol.",
         longDescription: "Midnight Radio is a decentralized, ephemeral voice streaming protocol built for the Mantle and Arbitrum ecosystems. It creates a digital 'Void'—a space where voice notes exist as live broadcasts for 24 hours before fading into silence, leaving behind only an immutable on-chain footprint. Unlike traditional social audio which is ephemeral-by-default but centralized, or podcasting which is permanent but heavy, Midnight Radio sits in the uncanny valley of digital permanence: the experience is fleeting, but the proof is eternal. Every broadcast is an ERC-721 NFT with audio pinned to IPFS for exactly 24 hours via a scheduled unpinning service, creating a 'Time-to-Live' (TTL) mechanic. The NFT itself remains in the broadcaster's wallet forever—a ghost of the transmission, a 'Proof of Voice.' It answers a specific question about Web3 social: Can we build a social graph based on fleeting moments rather than permanent feeds?",
         tech: ["Next.js", "Gemini API", "Socket.io", "Redis"],
@@ -86,58 +136,6 @@ export const PROJECTS: Project[] = [
                 "Guaranteeing deletion of IPFS content in a decentralized storage network inherently built for permanence.",
                 "Handling live audio streaming chunking and reliable upload formatting directly from web browsers.",
                 "Building a robust cron queue in a serverless environment to trigger the smart contract interactions and IPFS unpinning reliably."
-            ]
-        }
-    },
-    {
-        id: 4,
-        title: "Web3Wise",
-        description: "All-in-one on-chain consultancy and Web3 tooling platform.",
-        longDescription: "Web3Wise is an all-in-one on-chain consultancy and Web3 tooling platform. It provides a range of services to help users navigate the complex world of Web3. The platform is built with Next.js and TypeScript, and features a modern, user-friendly interface with a focus on accessibility and performance.",
-        tech: ["React", "Framer Motion", "Tailwind CSS", "Ethers.js", "Web3Modal"],
-        liveLink: "https://web3wise-v1.vercel.app/",
-        githubLink: "https://github.com/SATISH-JALAN/web3wise-v1",
-        image: "/web3wise.png",
-        year: "June 2025",
-        category: "personal",
-        caseStudy: {
-            problemStatement: "New entrants to Web3 struggle with overwhelming, fragmented tooling and complex onboarding processes, making it difficult to launch tokens, mint NFTs, or interact with DeFi protocols safely.",
-            systemArchitecture: "A modular, client-side heavy React application that abstracts complex Ethers.js and Web3Modal interactions behind intuitive, wizard-like interfaces. It acts as a friendly, visual abstraction layer over standard RPC nodes.",
-            techDecisions: [
-                "Adopted React for optimized component reuse while keeping blockchain tools purely client-rendered to prevent hydration mismatches.",
-                "Used Web3Modal for maximum wallet compatibility out of the box, drastically reducing connection drop-off.",
-                "Implemented Framer Motion to provide reassuring micro-interactions and loading states during high-latency blockchain reads/writes."
-            ],
-            engineeringChallenges: [
-                "Managing complex asynchronous states during wallet connection, network switching, and transaction signing.",
-                "Handling RPC rate limits gracefully when querying multiple on-chain data points simultaneously.",
-                "Designing a UI token standard (ERC20) generator that parses form inputs into safe, deployable bytecode dynamically."
-            ]
-        }
-    },
-    {
-        id: 5,
-        title: "Circlo",
-        description: "A peer-to-peer rental platform promoting sustainability and cultural preservation.",
-        longDescription: "Circlo is a peer-to-peer rental platform that connects individuals looking to rent or borrow items. It promotes sustainability by reducing waste and encouraging the sharing of resources. The platform is built with React and TypeScript, and features a modern, user-friendly interface with a focus on accessibility and performance.",
-        tech: ["Next.js", "TypeScript", "Tailwind CSS", "Firebase", "Cloud Firestore"],
-        liveLink: "",
-        githubLink: "https://github.com/SATISH-JALAN/Circlo-v1",
-        image: "/Circlo.png",
-        year: "Aug 2025",
-        category: "personal",
-        caseStudy: {
-            problemStatement: "The modern sharing economy lacks localized, trust-based platforms for peer-to-peer everyday item rentals, leading to massive overconsumption and hoarding of rarely used household goods.",
-            systemArchitecture: "A Next.js SSR application powered seamlessly by Firebase. Firestore acts as the real-time NoSQL database for item listings and user profiles, while Firebase Auth manages secure sign-ins. Cloud Functions handle complex backend logic like secure payments and booking conflict resolution.",
-            techDecisions: [
-                "Chose Firebase/Firestore to rapid-prototype the real-time availability sync and peer-to-peer chat features.",
-                "Used Tailwind CSS to build a clean, minimalist marketplace UI that feels premium and trustworthy.",
-                "Adopted strict TypeScript models (Zod validation) to maintain data schema integrity across the flexible NoSQL database."
-            ],
-            engineeringChallenges: [
-                "Designing a robust data schema in NoSQL to handle complex date-range overlap queries for booking availability.",
-                "Implementing accurate geohashing to allow users to efficiently search for items within specific proximity radii.",
-                "Building a fair, scalable, and sybil-resistant review and trust-scoring system for peer-to-peer interactions."
             ]
         }
     },

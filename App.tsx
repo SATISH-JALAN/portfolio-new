@@ -7,6 +7,7 @@ import { YearReview } from './components/sections/YearReview';
 import { BlogPreview } from './components/sections/BlogPreview';
 import { Contact } from './components/sections/Contact';
 import { CursorTrail } from './components/CursorTrail';
+import { Neko } from './components/Neko';
 import { ScrollToTop } from './components/ScrollToTop';
 import { FloatingNavbar } from './components/FloatingNavbar';
 import { ThemeToggle } from './components/ui/ThemeToggle';
@@ -16,36 +17,78 @@ import { TimeWidget } from './components/ui/TimeWidget';
 import { PORTFOLIO_DATA } from './constants';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+import Lenis from 'lenis';
+gsap.registerPlugin(useGSAP, ScrollTrigger);
+
+const reduceMotion = typeof window !== 'undefined' ? window.matchMedia("(prefers-reduced-motion: reduce)").matches : false;
+
+if (reduceMotion) {
+  // Accessibility: Force all GSAP animations to complete instantly
+  gsap.globalTimeline.timeScale(1000);
+}
 
 const AppContent: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const progressBarRef = useRef<HTMLDivElement>(null);
-
-  // Lock scroll during loading or modal open
-  useEffect(() => {
-    if (loading || isProjectModalOpen) {
-      document.body.classList.add('overflow-hidden');
-    } else {
-      document.body.classList.remove('overflow-hidden');
-    }
-  }, [loading, isProjectModalOpen]);
+  const lenisRef = useRef<Lenis | null>(null);
 
   // Initial Loading Scroll Lock & GSAP Sync
   useEffect(() => {
     if (loading) {
       window.scrollTo(0, 0);
     } else {
-      // When loading finishes, the DOM expands from h-screen to full height.
-      // We MUST instruct GSAP to recalculate all its trigger positions globally.
-      // We use a slight delay to ensure the browser has painted the new layout.
       setTimeout(() => {
-        gsap.registerPlugin(ScrollTrigger);
         ScrollTrigger.refresh();
       }, 100);
-      setTimeout(() => ScrollTrigger.refresh(), 500); // Failsafe for slower mobile paints
+      setTimeout(() => ScrollTrigger.refresh(), 500);
     }
   }, [loading]);
+
+  // Lenis Smooth Scroll Integration
+  useEffect(() => {
+    if (reduceMotion) return;
+
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      prevent: (node) => node.getAttribute('data-lenis-prevent') === 'true' || node.classList.contains('lenis-prevent'),
+    });
+
+    lenisRef.current = lenis;
+
+    lenis.on('scroll', ScrollTrigger.update);
+
+    const updateLenis = (time: number) => {
+      lenis.raf(time * 1000);
+    };
+
+    gsap.ticker.add(updateLenis);
+
+    return () => {
+      gsap.ticker.remove(updateLenis);
+      lenis.destroy();
+      lenisRef.current = null;
+    };
+  }, []);
+
+  // Lock scroll & pause Lenis during loading or modal open
+  useEffect(() => {
+    if (loading || isProjectModalOpen) {
+      document.body.classList.add('overflow-hidden');
+      document.documentElement.classList.add('overflow-hidden');
+      lenisRef.current?.stop();
+    } else {
+      document.body.classList.remove('overflow-hidden');
+      document.documentElement.classList.remove('overflow-hidden');
+      lenisRef.current?.start();
+    }
+  }, [loading, isProjectModalOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -70,7 +113,7 @@ const AppContent: React.FC = () => {
     <>
       <Helmet>
         <title>Satish Jalan | Software Engineer</title>
-        <meta name="description" content="Full Stack and Web3 developer building fast, scalable, and user-centric digital products. MERN stack, TypeScript, Solidity. Based in Kolkata. Available for freelance." />
+        <meta name="description" content="A Full-Stack & Web3 Developer obsessed with crafting stunning, lightning-fast user experiences. Specializing in React, TypeScript, Tailwind, GSAP & Framer Motion, MERN stack, and blockchain tech. Currently building at Valdyum Labs." />
         <meta name="keywords" content="Satish Jalan, Software Engineer, Full Stack Developer, React, Next.js, Web3, Portfolio" />
         <link rel="canonical" href="https://satishjalan.me/" />
         
@@ -101,6 +144,7 @@ const AppContent: React.FC = () => {
         </div>
 
         <CursorTrail />
+        <Neko />
 
         <ScrollToTop />
 
@@ -123,7 +167,7 @@ const AppContent: React.FC = () => {
           </div>
         </nav>
 
-        <main className="relative z-10 pb-32 md:pb-40">
+        <main className="relative z-10 pb-12 md:pb-16">
           <Hero loading={loading} />
           <Projects onModalOpen={setIsProjectModalOpen} />
           <About />

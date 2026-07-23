@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Geist Pixel';
+  src: url('/fonts/GeistPixel-Square.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Eustache';
+  src: url('/fonts/Eustache-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' shape-rendering='crispEdges'%3E%3Cpath fill='black' stroke='white' stroke-width='2' d='M2 2 L2 18 L7 13 L11 21 L14 20 L10 12 L17 12 Z'/%3E%3C/svg%3E") 2 2, auto;
+    --background: #050505;
+    --foreground: #ffffff;
+    --muted: #737373;
+    --border: #262626;
+    --accent: #ffffff;
+    --accent-foreground: #000000;
+  }
+
+  /* Force pointer items to also use the custom cursor */
+  a, button, [role="button"] {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' shape-rendering='crispEdges'%3E%3Cpath fill='black' stroke='white' stroke-width='2' d='M2 2 L2 18 L7 13 L11 21 L14 20 L10 12 L17 12 Z'/%3E%3C/svg%3E") 2 2, pointer;
+  }
+
+  html.light {
+    --background: #f0f0f0;
+    --foreground: #171717;
+    --muted: #a3a3a3;
+    --border: #e5e5e5;
+    --accent: #171717;
+    --accent-foreground: #ffffff;
+  }
+
+  html,
+  body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    overflow-x: hidden;
+    line-height: 1.75;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+}
+
+@layer components {
+  /* Grain Overlay */
+  .grain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  html.light .grain {
+    filter: invert(1);
+    opacity: 0.05;
+  }
+  
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@layer utilities {
+  .hero-image-wrapper {
+    will-change: clip-path;
+  }
+  .hero-char, .hero-fade {
+    will-change: transform, opacity;
+  }
+}
+
+/* Force specific line heights globally on headers */
+h1, h2, h3, h4, h5, h6,
+.text-4xl, .text-5xl, .text-6xl, .text-7xl, .text-8xl,
+.text-\[14vw\], .text-\[10vw\], .text-\[6vw\] {
+  line-height: 1.0 !important;
+}
+
+::selection {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}

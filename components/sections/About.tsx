@@ -1,6 +1,7 @@
-import React, { useRef, useLayoutEffect } from 'react';
+import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import { SKILLS } from '../../constants';
 import { GithubGraph } from '../ui/GithubGraph';
 import { getTechIconInfo } from '../ui/TechBadge';
@@ -10,40 +11,33 @@ gsap.registerPlugin(ScrollTrigger);
 export const About: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
 
-    useLayoutEffect(() => {
-        const ctx = gsap.context(() => {
-            // Helper for fade-in animations
-            const animateIn = (selector: string | Element, trigger: string | Element, stagger = 0) => {
-                gsap.fromTo(selector,
-                    {
-                        y: 30,
-                        autoAlpha: 0
-                    },
-                    {
-                        y: 0,
-                        autoAlpha: 1,
-                        duration: 0.8,
-                        stagger: stagger,
-                        ease: "power3.out",
-                        scrollTrigger: {
-                            trigger: trigger,
-                            start: "top 95%", // Permissive trigger
-                            once: true // Play once to avoid mobile resize bugs
-                        }
-                    }
-                );
-            };
+    useGSAP(() => {
+        const animateIn = (selector: string | Element, trigger: string | Element, stagger = 0) => {
+            gsap.fromTo(selector,
+                { y: 30, autoAlpha: 0 },
+                {
+                    y: 0, autoAlpha: 1, duration: 0.8, stagger: stagger, ease: "power3.out",
+                    scrollTrigger: { trigger: trigger, start: "top 95%", once: true }
+                }
+            );
+        };
 
-            // Tech Items (Grid Stagger)
-            animateIn(".tech-item", ".tech-grid", 0.05);
+        animateIn(".tech-item", ".tech-grid", 0.05);
+        animateIn(".contributions-wrapper", ".contributions-wrapper");
 
-            // Contributions
-            animateIn(".contributions-wrapper", ".contributions-wrapper");
+        // Parallax effect for the Github Graph
+        gsap.to(".github-parallax", {
+            yPercent: 15,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".contributions-wrapper",
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true
+            }
+        });
 
-        }, containerRef);
-
-        return () => ctx.revert();
-    }, []);
+    }, { scope: containerRef });
 
     return (
         <section id="about" className="py-32 bg-background relative overflow-hidden transition-colors duration-500">
@@ -59,16 +53,16 @@ export const About: React.FC = () => {
                         {/* Header Column */}
                         <div className="text-left">
                             <span className="font-mono text-xs text-muted/60 uppercase tracking-widest mb-6 block">01 / Ecosystem</span>
-                            <h2 className="text-4xl md:text-6xl font-display font-medium text-foreground tracking-tighter leading-[0.9]">
+                            <h2 className="text-4xl md:text-6xl font-pixel font-medium text-foreground tracking-tighter leading-[0.9]">
                                 Tech<br />Stack.
                             </h2>
                         </div>
 
                         {/* Content Column - Category Groups */}
-                        <div className="space-y-10 pt-2 lg:pt-0">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 lg:pt-0">
                             {SKILLS.map((category, catIndex) => (
-                                <div key={catIndex} className="relative pt-6 first:pt-4">
-                                    <h3 className="absolute top-0 left-0 text-[10px] sm:text-xs font-mono text-muted/60 uppercase tracking-widest">{category.title}</h3>
+                                <div key={catIndex} className="p-6 border border-border/40 hover:border-border/80 transition-colors duration-500 bg-foreground/[0.02] rounded-xl flex flex-col gap-5">
+                                    <h3 className="text-[10px] sm:text-xs font-mono text-muted/60 uppercase tracking-widest">{category.title}</h3>
                                     <div className="flex flex-wrap gap-2.5">
                                         {category.items.map((skill, i) => {
                                             const iconInfo = getTechIconInfo(skill.name);
@@ -79,14 +73,14 @@ export const About: React.FC = () => {
                                             return (
                                                 <div 
                                                     key={i} 
-                                                    className={`tech-item group flex items-center gap-2.5 px-3 py-1.5 transition-all duration-300 rounded-lg cursor-default 
+                                                    className={`tech-item group flex items-center gap-2.5 px-3 py-1.5 transition-all duration-500 rounded-lg cursor-default 
                                                         ${isTier1 
-                                                            ? 'opacity-100 border border-border bg-foreground/[0.06] font-medium hover:bg-foreground/10 hover:border-foreground/40' 
-                                                            : 'opacity-60 border border-border/40 bg-transparent font-normal hover:opacity-100 hover:bg-foreground/5 hover:border-border/80'}`}
+                                                            ? 'opacity-100 border border-border bg-foreground/[0.04] font-medium hover:bg-foreground/10 hover:border-foreground/40 hover:-translate-y-0.5 hover:scale-[1.02]' 
+                                                            : 'opacity-60 border border-border/40 bg-transparent font-normal hover:opacity-100 hover:bg-foreground/5 hover:border-border/80 hover:-translate-y-0.5 hover:scale-[1.02]'}`}
                                                     title={skill.description}
                                                 >
                                                     {/* Icon Header */}
-                                                    <div className={`text-base flex items-center justify-center transition-colors duration-300 ${isTier1 ? 'text-foreground/80 group-hover:text-foreground' : 'text-muted group-hover:text-foreground/80'}`}>
+                                                    <div className={`text-base flex items-center justify-center transition-colors duration-500 ${isTier1 ? 'text-foreground/80 group-hover:text-foreground' : 'text-muted group-hover:text-foreground/80'}`}>
                                                         {iconClass ? (
                                                             <i className={`${iconClass}`} />
                                                         ) : FallbackIcon ? (
@@ -96,7 +90,7 @@ export const About: React.FC = () => {
                                                         )}
                                                     </div>
 
-                                                    <span className={`font-mono text-xs tracking-wide transition-colors ${isTier1 ? 'text-foreground group-hover:text-foreground' : 'text-muted group-hover:text-foreground/90'}`}>
+                                                    <span className={`font-mono text-xs tracking-wide transition-colors duration-500 ${isTier1 ? 'text-foreground group-hover:text-foreground' : 'text-muted group-hover:text-foreground/90'}`}>
                                                         {skill.name}
                                                     </span>
                                                 </div>
@@ -113,7 +107,7 @@ export const About: React.FC = () => {
                         {/* Header Column */}
                         <div className="text-left lg:sticky lg:top-32">
                             <span className="font-mono text-xs text-muted/60 uppercase tracking-widest mb-6 block">02 / Code</span>
-                            <h2 className="text-4xl md:text-6xl font-display font-medium text-foreground tracking-tighter leading-[0.9]">
+                            <h2 className="text-4xl md:text-6xl font-pixel font-medium text-foreground tracking-tighter leading-[0.9]">
                                 Open<br />Source.
                             </h2>
                             <p className="mt-8 text-muted leading-relaxed">
@@ -122,7 +116,7 @@ export const About: React.FC = () => {
                         </div>
 
                         {/* Content Column */}
-                        <div className="pt-2 lg:pt-0">
+                        <div className="pt-2 lg:pt-0 github-parallax">
                             <div className="p-6 border border-border bg-foreground/5 rounded-sm hover:border-muted transition-colors">
                                 <GithubGraph />
                             </div>

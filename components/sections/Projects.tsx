@@ -1,7 +1,7 @@
-
-import React, { useRef, useLayoutEffect, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import { PROJECTS } from '../../constants';
 import { Project } from '../../types';
 import { ArrowUpRight, Github, ExternalLink, X, Calendar } from 'lucide-react';
@@ -14,63 +14,134 @@ interface ProjectsProps {
     onModalOpen?: (isOpen: boolean) => void;
 }
 
+const ProjectCard: React.FC<{ project: Project; onClick: () => void }> = ({ project, onClick }) => {
+    return (
+        <div
+            onClick={onClick}
+            className="project-card group cursor-pointer flex flex-col gap-5 w-full"
+        >
+            {/* Image Card */}
+            <div className="relative overflow-hidden rounded-2xl border border-border bg-muted/5 aspect-[4/3] md:aspect-[16/11] w-full">
+                <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/[0.02] transition-colors duration-500 z-10 pointer-events-none" />
+
+                <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-contain p-2 transition-transform duration-1000 ease-out group-hover:scale-[1.03]"
+                />
+
+
+                {/* Floating Top-Right Icons */}
+                <div className="absolute top-4 right-4 z-20 flex gap-2">
+                    {project.githubLink && (
+                        <a 
+                            href={project.githubLink} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="w-10 h-10 bg-foreground text-background flex items-center justify-center rounded-full shadow-lg hover:scale-110 transition-transform"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <Github size={18} />
+                        </a>
+                    )}
+                    {project.liveLink && (
+                        <a 
+                            href={project.liveLink} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="w-10 h-10 bg-foreground text-background flex items-center justify-center rounded-full shadow-lg hover:scale-110 transition-transform"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <ExternalLink size={18} />
+                        </a>
+                    )}
+                </div>
+            </div>
+
+            {/* Content Container */}
+            <div className="flex flex-col gap-3">
+                {/* Title and Tech Badges Row */}
+                <div className="flex justify-between items-center w-full">
+                    <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground tracking-tight group-hover:text-lime-400 transition-colors duration-300 uppercase">
+                        {project.title}
+                    </h3>
+                    <div className="flex gap-2">
+                        {project.tech.slice(0, 2).map((t, i) => (
+                            <span key={i} className="font-mono text-[10px] md:text-xs font-medium text-muted uppercase border border-border/50 px-2 py-1 rounded-sm">
+                                {t}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Description */}
+                <p className="text-muted/90 line-clamp-2 text-sm md:text-base leading-relaxed max-w-[90%]">
+                    {project.description}
+                </p>
+            </div>
+        </div>
+    );
+};
+
 export const Projects: React.FC<ProjectsProps> = ({ onModalOpen }) => {
-    const containerRef = useRef<HTMLDivElement>(null);
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [selectedCategory, setSelectedCategory] = useState<'personal' | 'client'>('personal');
+    const containerRef = useRef<HTMLDivElement>(null);
 
-    // Filter projects based on selected category
     const filteredProjects = PROJECTS.filter(project => project.category === selectedCategory);
 
-    useLayoutEffect(() => {
-        const ctx = gsap.context(() => {
-            // Animate grid items staggering in
-            gsap.from(".project-card", {
-                scrollTrigger: {
-                    trigger: ".projects-grid",
-                    start: "top 85%",
-                    toggleActions: "play none none reverse"
-                },
-                y: 50,
-                opacity: 0,
-                duration: 0.8,
-                stagger: 0.1,
-                ease: "power3.out"
-            });
-        }, containerRef);
-
-        return () => ctx.revert();
-    }, [selectedCategory]); // Re-run animation when category changes
-
-    // Handle body scroll locking when modal is open and notify parent
     useEffect(() => {
         if (selectedProject) {
             document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
             if (onModalOpen) onModalOpen(true);
         } else {
             document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
             if (onModalOpen) onModalOpen(false);
         }
     }, [selectedProject, onModalOpen]);
 
+    useGSAP(() => {
+        if (!containerRef.current) return;
+        
+        // Reset and kill previous triggers on category change
+        ScrollTrigger.getAll().forEach(t => t.kill());
+
+        gsap.set(".project-card-wrapper", { y: 50, opacity: 0 });
+
+        ScrollTrigger.batch(".project-card-wrapper", {
+            interval: 0.1,
+            batchMax: 2,
+            onEnter: batch => gsap.to(batch, {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: "power3.out",
+                overwrite: true
+            }),
+            start: "top 85%",
+        });
+
+    }, { dependencies: [selectedCategory], scope: containerRef });
+
     return (
-        <section id="work" className="py-32 relative bg-background transition-colors duration-500">
-            <div ref={containerRef} className="container px-4 md:px-6 mx-auto">
-                <div className="flex items-end justify-between mb-8 border-b border-border pb-6">
+        <section id="work" className="relative bg-background transition-colors duration-500 py-24 flex flex-col">
+            <div className="container px-4 md:px-6 mx-auto mb-16 flex-shrink-0">
+                <div className="flex items-end justify-between border-b border-border pb-6">
                     <div>
-                        <h2 className="text-4xl md:text-6xl font-display font-bold text-foreground">Projects</h2>
+                        <h2 className="text-4xl md:text-6xl font-pixel font-medium text-foreground tracking-tighter">Selected<br/>Works.</h2>
                     </div>
-                    {/* Updated to 03 since Capabilities was removed */}
-                    <span className="font-mono text-muted hidden md:block">(03)</span>
+                    <span className="font-mono text-muted hidden md:block uppercase text-xs tracking-widest">(03 / Projects)</span>
                 </div>
 
-                {/* Category Toggle Switch */}
-                <div className="flex justify-center mb-12">
-                    <div className="inline-flex items-center gap-1 p-1 bg-muted/20 rounded-full border border-border">
+                <div className="flex justify-start mt-8">
+                    <div className="inline-flex items-center gap-2 p-1.5 bg-foreground/[0.02] rounded-full border border-border/40">
                         <button
                             onClick={() => setSelectedCategory('personal')}
-                            className={`px-6 py-2.5 rounded-full font-mono text-sm font-medium transition-all duration-300 ${selectedCategory === 'personal'
-                                ? 'bg-foreground text-background shadow-lg'
+                            className={`px-6 py-2 rounded-full font-mono text-xs tracking-wide transition-all duration-300 ${selectedCategory === 'personal'
+                                ? 'bg-foreground text-background shadow-sm'
                                 : 'text-muted hover:text-foreground'
                                 }`}
                         >
@@ -78,8 +149,8 @@ export const Projects: React.FC<ProjectsProps> = ({ onModalOpen }) => {
                         </button>
                         <button
                             onClick={() => setSelectedCategory('client')}
-                            className={`px-6 py-2.5 rounded-full font-mono text-sm font-medium transition-all duration-300 ${selectedCategory === 'client'
-                                ? 'bg-foreground text-background shadow-lg'
+                            className={`px-6 py-2 rounded-full font-mono text-xs tracking-wide transition-all duration-300 ${selectedCategory === 'client'
+                                ? 'bg-foreground text-background shadow-sm'
                                 : 'text-muted hover:text-foreground'
                                 }`}
                         >
@@ -87,58 +158,14 @@ export const Projects: React.FC<ProjectsProps> = ({ onModalOpen }) => {
                         </button>
                     </div>
                 </div>
+            </div>
 
-                {/* Grid Layout */}
-                <div className="projects-grid grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-start">
+            {/* Vertical Grid Container */}
+            <div ref={containerRef} className="container px-4 md:px-6 mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14 w-full">
                     {filteredProjects.map((project) => (
-                        <div
-                            key={project.id}
-                            onClick={() => setSelectedProject(project)}
-                            className="project-card group cursor-pointer flex flex-col gap-4 active:scale-[0.98] transition-transform duration-200"
-                        >
-                            {/* Image Card */}
-                            <div className="relative overflow-hidden rounded-md border border-border bg-muted/10">
-                                {/* Overlay gradient for text legibility if needed, but keeping it clean for now */}
-                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 z-10" />
-
-                                <img
-                                    src={project.image}
-                                    alt={project.title}
-                                    className="w-full h-auto transition-transform duration-700 ease-out group-hover:scale-105"
-                                />
-
-                                {/* Floating Action Icon */}
-                                <div className="absolute top-4 right-4 z-20 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                                    <div className="w-10 h-10 bg-background/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg border border-border text-foreground">
-                                        <ArrowUpRight size={20} />
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Content */}
-                            <div className="space-y-3">
-                                <div className="flex justify-between items-start">
-                                    <h3 className="text-2xl font-display font-bold text-foreground group-hover:text-muted transition-colors">
-                                        {project.title}
-                                    </h3>
-                                    <span className="font-mono text-xs text-muted border border-border px-2 py-1 rounded">
-                                        {project.year}
-                                    </span>
-                                </div>
-
-                                <p className="text-muted line-clamp-2 text-sm leading-relaxed">
-                                    {project.description}
-                                </p>
-
-                                <div className="flex flex-wrap gap-2 pt-1">
-                                    {project.tech.slice(0, 3).map((t, i) => (
-                                        <TechBadge key={i} name={t} />
-                                    ))}
-                                    {project.tech.length > 3 && (
-                                        <Badge className="bg-transparent border-transparent text-muted">+{project.tech.length - 3}</Badge>
-                                    )}
-                                </div>
-                            </div>
+                        <div key={project.id} className="project-card-wrapper opacity-0">
+                            <ProjectCard project={project} onClick={() => setSelectedProject(project)} />
                         </div>
                     ))}
                 </div>
@@ -174,23 +201,61 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
     }, []);
 
     return (
-        <div ref={modalRef} className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-xl p-4 md:p-8">
+        <div 
+            ref={modalRef} 
+            data-lenis-prevent="true"
+            onWheel={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
+            onClick={(e) => {
+                if (e.target === modalRef.current) onClose();
+            }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-xl p-4 md:p-8 overflow-hidden lenis-prevent"
+        >
             
             {/* Scrollable Container - Stacked Layout */}
-            <div ref={contentRef} className="w-full max-w-4xl max-h-[90vh] bg-background border border-border rounded-lg shadow-2xl relative overflow-y-auto overflow-x-hidden">
+            <div 
+                ref={contentRef} 
+                data-lenis-prevent="true"
+                onWheel={(e) => e.stopPropagation()}
+                onTouchMove={(e) => e.stopPropagation()}
+                className="w-full max-w-4xl max-h-[90vh] bg-background border border-border rounded-lg shadow-2xl relative overflow-y-auto overflow-x-hidden overscroll-contain lenis-prevent"
+            >
 
-                {/* Sticky Header with Close Button */}
-                <div className="sticky top-0 z-20 flex justify-between items-center bg-background p-4 md:px-8 md:py-6 border-b border-border">
-                    <span className="font-mono text-xs px-3 py-1 rounded-full border border-border text-muted uppercase tracking-wider bg-foreground/5">
+                <div className="sticky top-0 z-20 flex justify-between items-center bg-background/95 backdrop-blur-md p-4 md:px-8 md:py-5 border-b border-border">
+                    <span className="font-mono text-xs text-muted uppercase tracking-widest font-medium">
                         {project.year}
                     </span>
-                    <button
-                        onClick={onClose}
-                        className="w-10 h-10 rounded-full bg-foreground/10 text-foreground flex items-center justify-center hover:bg-foreground hover:text-background transition-colors"
-                        aria-label="Close modal"
-                    >
-                        <X size={20} />
-                    </button>
+                    <div className="flex items-center gap-2 md:gap-3">
+                        {project.githubLink && (
+                            <a
+                                href={project.githubLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-10 h-10 rounded-full bg-foreground/10 text-foreground flex items-center justify-center hover:bg-foreground hover:text-background transition-colors"
+                                title="View GitHub Repository"
+                            >
+                                <Github size={18} />
+                            </a>
+                        )}
+                        {project.liveLink && project.liveLink !== "" && (
+                            <a
+                                href={project.liveLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-10 h-10 rounded-full bg-foreground/10 text-foreground flex items-center justify-center hover:bg-foreground hover:text-background transition-colors"
+                                title="View Live Demo"
+                            >
+                                <ExternalLink size={18} />
+                            </a>
+                        )}
+                        <button
+                            onClick={onClose}
+                            className="w-10 h-10 rounded-full bg-foreground/10 text-foreground flex items-center justify-center hover:bg-foreground hover:text-background transition-colors ml-1"
+                            aria-label="Close modal"
+                        >
+                            <X size={20} />
+                        </button>
+                    </div>
                 </div>
 
                 {/* Image - Full width, natural height */}
@@ -205,9 +270,35 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
                 {/* Content */}
                 <div className="w-full p-8 md:p-12">
                     <div className="flex-1">
-                        <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6 leading-tight">
-                            {project.title}
-                        </h2>
+                        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                            <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground leading-tight">
+                                {project.title}
+                            </h2>
+                            <div className="flex items-center gap-3">
+                                {project.githubLink && (
+                                    <a
+                                        href={project.githubLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-11 h-11 bg-foreground text-background flex items-center justify-center rounded-full shadow-lg hover:scale-110 transition-transform"
+                                        title="View GitHub Repository"
+                                    >
+                                        <Github size={20} />
+                                    </a>
+                                )}
+                                {project.liveLink && project.liveLink !== "" && (
+                                    <a
+                                        href={project.liveLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-11 h-11 bg-foreground text-background flex items-center justify-center rounded-full shadow-lg hover:scale-110 transition-transform"
+                                        title="View Live Demo"
+                                    >
+                                        <ExternalLink size={20} />
+                                    </a>
+                                )}
+                            </div>
+                        </div>
 
                         <div className="flex flex-wrap gap-2 mb-8">
                             {project.tech.map((tech) => (
@@ -271,31 +362,6 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
                                 )}
                             </div>
                         )}
-                    </div>
-
-                    <div className="mt-8 pt-8 border-t border-border flex flex-col sm:flex-row gap-4">
-                        {project.liveLink && project.liveLink !== "" && (
-                            <a
-                                href={project.liveLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex-1"
-                            >
-                                <Button className="w-full gap-2 h-12 text-sm uppercase tracking-widest font-bold">
-                                    Live Demo <ExternalLink size={16} />
-                                </Button>
-                            </a>
-                        )}
-                        <a
-                            href={project.githubLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex-1"
-                        >
-                            <Button variant="outline" className="w-full gap-2 h-12 text-sm uppercase tracking-widest font-bold">
-                                Github Repo <Github size={16} />
-                            </Button>
-                        </a>
                     </div>
                 </div>
             </div>

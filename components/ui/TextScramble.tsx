@@ -1,4 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
+import gsap from 'gsap';
+import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin';
+
+gsap.registerPlugin(ScrambleTextPlugin);
 
 interface TextScrambleProps {
     text: string;
@@ -6,51 +10,39 @@ interface TextScrambleProps {
     reveal?: boolean; // If true, runs once on mount. If false/undefined, runs on hover.
 }
 
-const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
-
 export const TextScramble: React.FC<TextScrambleProps> = ({ text, className = "", reveal = false }) => {
-    const [displayText, setDisplayText] = useState(text);
-    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const textRef = useRef<HTMLSpanElement>(null);
 
     const scramble = () => {
-        let iteration = 0;
-
-        if (intervalRef.current) clearInterval(intervalRef.current);
-
-        intervalRef.current = setInterval(() => {
-            setDisplayText(prev => 
-                text
-                    .split("")
-                    .map((letter, index) => {
-                        if (index < iteration) {
-                            return text[index];
-                        }
-                        return CHARS[Math.floor(Math.random() * CHARS.length)];
-                    })
-                    .join("")
-            );
-
-            if (iteration >= text.length) {
-                if (intervalRef.current) clearInterval(intervalRef.current);
-            }
-
-            iteration += 1 / 3;
-        }, 30);
+        if (!textRef.current) return;
+        gsap.to(textRef.current, {
+            duration: 1.5,
+            scrambleText: {
+                text: text,
+                chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+",
+                revealDelay: 0.1,
+                speed: 0.8
+            },
+            ease: "power1.out",
+            overwrite: "auto"
+        });
     };
 
-    React.useEffect(() => {
-        if (reveal) scramble();
-        return () => {
-            if (intervalRef.current) clearInterval(intervalRef.current);
-        };
-    }, [reveal]);
+    useEffect(() => {
+        if (reveal) {
+            // Wait slightly so Hero GSAP timeline coordinates well
+            const timeout = setTimeout(() => scramble(), 500);
+            return () => clearTimeout(timeout);
+        }
+    }, [reveal, text]);
 
     return (
         <span 
+            ref={textRef}
             className={`inline-block font-mono ${className}`}
             onMouseEnter={!reveal ? scramble : undefined}
         >
-            {displayText}
+            {reveal ? text.replace(/./g, " ") : text}
         </span>
     );
 };

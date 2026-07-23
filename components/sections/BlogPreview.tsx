@@ -6,8 +6,36 @@ import { ArrowRight } from 'lucide-react';
 export const BlogPreview: React.FC = () => {
     const { posts, loading, error } = useBlogPosts(BLOG_CONFIG.hashnodeHost, BLOG_CONFIG.mediumUsername);
 
-    // Get top 4 posts
-    const displayPosts = posts.slice(0, 4);
+    // Manually add the static blog posts at the top
+    const staticPosts = [
+        {
+            id: "token-2022-static",
+            title: "Token-2022",
+            brief: "An in-depth look at the new Token-2022 standard, its extensions, and how it expands capabilities for developers and users.",
+            url: "https://medium.com/@satishjalan9163/token-2022-fc8153b3b0c1?sharedUserId=satishjalan9163",
+            date: "2026-06-22T17:02:10Z",
+            readTimeInMinutes: 4,
+            source: 'Medium'
+        },
+        {
+            id: "elite-tech-websites",
+            title: "I opened 20 elite tech websites back-to-back. One question kept haunting me.",
+            brief: "An analysis of modern web design trends after reviewing 20 elite tech websites, exploring what makes them stand out and the common patterns they share.",
+            url: "https://thegrain.hashnode.dev/i-opened-20-elite-tech-websites-back-to-back-one-question-kept-haunting-me",
+            date: "2024-05-10T12:00:00Z", // arbitrary past date to sort below new post
+            readTimeInMinutes: 5,
+            source: 'Hashnode'
+        }
+    ];
+
+    // Filter out the static posts from fetched posts if they exist to prevent duplicates
+    const fetchedPosts = posts.filter(p => 
+        !p.url.includes("token-2022-fc8153b3b0c1") && 
+        !p.url.includes("i-opened-20-elite-tech-websites")
+    );
+
+    // Get top 4 posts, ensuring the new ones are at the top
+    const displayPosts = [...staticPosts, ...fetchedPosts].slice(0, 4);
 
     return (
         <section id="blog" className="py-24 relative bg-background">
@@ -16,7 +44,7 @@ export const BlogPreview: React.FC = () => {
                 {/* Header */}
                 <div className="flex items-end justify-between mb-12 border-b border-border pb-6">
                     <div>
-                        <h2 className="text-4xl md:text-6xl font-display font-medium text-foreground tracking-tighter">Writing.</h2>
+                        <h2 className="text-4xl md:text-6xl font-pixel font-medium text-foreground tracking-tighter">Writing.</h2>
                     </div>
                     <span className="font-mono text-xs text-muted/60 uppercase tracking-widest hidden md:block">05 / Writing</span>
                 </div>
